@@ -4,13 +4,13 @@
 <style>
 
 body {
-  font: 12px sans-serif;
+  font: 11px sans-serif;
 }
 
 .chord path {
   fill-opacity: .67;
   stroke: #000;
-  stroke-width: .5px;
+  stroke-width: .1px;
 }
 
 </style>
@@ -19,28 +19,39 @@ body {
 <script>
 
 // From http://mkweb.bcgsc.ca/circos/guide/tables/
-var matrix = [
-  [11975,  5871, 8916, 2868, 5000],
-  [ 1951, 10048, 2060, 6171, 4000],
-  [ 8010, 16145, 8090, 8045, 3000],
-  [ 1013,   990,  940, 6907, 2000],
-  [ 1000,  5000, 6000, 1000, 4000]
-];
 
-var city = ["sf", "la", "chicago", "boston", "oakland"]
+//var city = ["Atlanta", "Chicago", "LA", "Boston", "Oakland", "Phoenix", "Denver", "SF", "Boise", "Seattle"];
+var city = ['Montgomery', 'Juneau', 'Phoenix', 'Little Rock', 'Sacramento', 'Denver', 'Hartford', 'Dover', 'Tallahassee', 'Atlanta', 'Honolulu', 'Boise', 'Springfield', 'Indianapolis', 'Des Moines', 'Topeka', 'Frankfort', 'Baton Rouge', 'Augusta', 'Annapolis', 'Boston', 'Lansing', 'Saint Paul', 'Jackson', 'Jefferson City', 'Helena', 'Lincoln', 'Carson City', 'Concord', 'Trenton', 'Santa Fe', 'Albany', 'Raleigh', 'Bismarck', 'Columbus', 'Oklahoma City', 'Salem', 'Harrisburg', 'Providence', 'Columbia', 'Pierre', 'Nashville', 'Austin', 'Salt Lake City', 'Montpelier', 'Richmond', 'Olympia', 'Charleston', 'Madison', 'Cheyenne', 'New York', 'Los Angeles', 'Chicago', 'Houston', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Jacksonville', 'San Francisco', 'Charlotte', 'Fort Worth', 'Detroit', 'El Paso', 'Memphis', 'Seattle', 'Washington', 'Baltimore', 'Louisville', 'Portland', 'Las Vegas', 'Milwaukee', 'Albuquerque', 'Tucson', 'Fresno', 'Long Beach', 'Kansas City', 'Mesa', 'Virginia Beach', 'Colorado Springs', 'Omaha', 'Miami', 'Oakland', 'Minneapolis', 'Tulsa', 'Cleveland', 'Wichita', 'Arlington', 'New Orleans', 'Bakersfield', 'Tampa', 'Aurora', 'Anaheim', 'Santa Ana', 'St. Louis', 'Riverside', 'Corpus Christi', 'Lexington', 'Pittsburgh'];
+
+var matrix = [];
+for (var j = 0; j < city.length; j++) {
+    matrix.push([]);
+    for (var i = 0; i < city.length; i++) {
+      var newNumber = Math.random() * 1000;
+      if (newNumber < 900){newNumber = 0};
+      matrix[j].push(newNumber);
+}}
+
+console.log(matrix);
+
+
 var chord = d3.layout.chord()
-    .padding(.05)
+    .padding(.005)
     .sortSubgroups(d3.descending)
     .matrix(matrix);
 
-var width = 1000,
-    height = 500,
+
+
+var width = 1500,
+    height = 800,
     innerRadius = Math.min(width, height) * .41,
     outerRadius = innerRadius * 1.1;
 
-var fill = d3.scale.ordinal()
-    .domain(d3.range(5))
-    .range(["#000000", "#FFDD89", "#957244", "#F26223", "#3254A1"]);
+var fill = d3.scale.category20c();
+
+//var fill = d3.scale.ordinal()
+//    .domain(d3.range(10))
+//    .range(["#000000", "#FFDD89", "#957244", "#F26223", "#3254A1"]);
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
@@ -54,7 +65,7 @@ svg.append("g").selectAll("path")
     .style("fill", function(d) { return fill(d.index); })
     .style("stroke", function(d) { return fill(d.index); })
     .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
-    .on("mouseover", fade(.1))
+    .on("mouseover", fade(.05))
     .on("mouseout", fade(1));
 
 var ticks = svg.append("g").selectAll("g")
