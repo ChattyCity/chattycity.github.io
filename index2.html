@@ -23,26 +23,6 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-/*var city = ['Montgomery', 'Juneau', 'Phoenix', 'Little Rock', 'Sacramento', 'Denver', 'Hartford', 'Dover', 'Tallahassee', 'Atlanta', 'Honolulu', 'Boise', 'Springfield', 'Indianapolis', 'Des Moines', 'Topeka', 'Frankfort', 'Baton Rouge', 'Augusta', 'Annapolis', 'Boston', 'Lansing', 'Saint Paul', 'Jackson', 'Jefferson City', 'Helena', 'Lincoln', 'Carson City', 'Concord', 'Trenton', 'Santa Fe', 'Albany', 'Raleigh', 'Bismarck', 'Columbus', 'Oklahoma City', 'Salem', 'Harrisburg', 'Providence', 'Columbia', 'Pierre', 'Nashville', 'Austin', 'Salt Lake City', 'Montpelier', 'Richmond', 'Olympia', 'Charleston', 'Madison', 'Cheyenne'];
-
-var matrix = [];
-for (var j = 0; j < city.length; j++) {
-    matrix.push([]);
-    for (var i = 0; i < city.length; i++) {
-      var newNumber = Math.random();
-      if (newNumber < .9){newNumber = 0};
-      matrix[j].push(newNumber);
-}}
-
-var matrix2 = [];
-for (var j = 0; j < city.length; j++) {
-    matrix2.push([]);
-    for (var i = 0; i < city.length; i++) {
-      var newNumber = Math.random();
-      if (newNumber < .9){newNumber = 0};
-      matrix2[j].push(newNumber);
-}}
-*/
 var padding = 40;
 
 var width = 700,
@@ -69,7 +49,6 @@ var layout2 = d3.layout.chord()
 var path = d3.svg.chord()
     .radius(innerRadius);
 
-
 var fill = d3.scale.category20();
 
 var svg = d3.select("body").append("div")
@@ -92,10 +71,16 @@ var svg2 = d3.select("body").append("div")
     .attr("class", "circle")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+var city;
+var matrix;
+var matrix2;
 
-d3.csv("cities.csv", function(city){
-d3.json("matrix_pos.json", function(matrix) {
-  d3.json("matrix_neg.json", function(matrix2) {
+d3.csv("cities.csv", function(cities){
+  city = cities;
+d3.json("matrix_pos.json", function(matrix_pos) {
+  matrix = matrix_pos;
+  d3.json("matrix_neg.json", function(matrix_neg) {
+    matrix2 = matrix_neg;
 
     var chord = layout.matrix(matrix);
     var chord2 = layout2.matrix(matrix2);
