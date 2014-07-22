@@ -93,7 +93,7 @@ d3.csv("cities.csv", function(cities){
   //NE is blue
   var NE_color = d3.scale.linear()
     .domain([0,NE])
-    .range([d3.rgb(0,40,255),d3.rgb(0,10,64)]);
+    .range([d3.rgb(0,255,255),d3.rgb(0,0,64)]);
 
   //SE is green
   var SE_color = d3.scale.linear()
@@ -103,7 +103,7 @@ d3.csv("cities.csv", function(cities){
   //SW is orange
   var SW_color = d3.scale.linear()
     .domain([0,SW])
-    .range([d3.rgb(255,154,0),d3.rgb(64,39,0)]);
+    .range([d3.rgb(255,255,0),d3.rgb(64,64,0)]);
 
   //NW is red
   var NW_color = d3.scale.linear()
