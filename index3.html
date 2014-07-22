@@ -20,13 +20,47 @@
 
 </style>
 <body>
+<!--  <div id="pos">
+    <table>
+    <tbody>
+      <tr>
+        <td class="diagram"></td>
+      </tr>
+      <tr>
+        <td>positive</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+
+  <div id="neg">
+    <table>
+    <tbody>
+      <tr>
+        <td class="diagram"></td>
+      </tr>
+      <tr>
+        <td>negative</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+
+-->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
 var padding = 40;
 
-var width = 700,
-    height = 600,
+var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+var width = x/2 - 20,
+    height = y,
     innerRadius = Math.min(width, height) * .40 - padding,
     outerRadius = innerRadius + 24;
 
@@ -53,7 +87,7 @@ var path = d3.svg.chord()
 
 var svg = d3.select("body").append("div")
     .attr("id","pos")
-    .text("positive")
+    //.text("positive")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -63,7 +97,7 @@ var svg = d3.select("body").append("div")
 
 var svg2 = d3.select("body").append("div")
     .attr("id","neg")
-    .text("negative")
+    //.text("negative")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
