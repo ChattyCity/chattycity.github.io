@@ -20,13 +20,47 @@
 
 </style>
 <body>
+<!--  <div id="pos">
+    <table>
+    <tbody>
+      <tr>
+        <td class="diagram"></td>
+      </tr>
+      <tr>
+        <td>positive</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+
+  <div id="neg">
+    <table>
+    <tbody>
+      <tr>
+        <td class="diagram"></td>
+      </tr>
+      <tr>
+        <td>negative</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+
+-->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
 var padding = 40;
 
-var width = 700,
-    height = 600,
+var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+var width = x/2 - 20,
+    height = y,
     innerRadius = Math.min(width, height) * .40 - padding,
     outerRadius = innerRadius + 24;
 
@@ -53,7 +87,7 @@ var path = d3.svg.chord()
 
 var svg = d3.select("body").append("div")
     .attr("id","pos")
-    .text("positive")
+    //.text("positive")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -63,7 +97,7 @@ var svg = d3.select("body").append("div")
 
 var svg2 = d3.select("body").append("div")
     .attr("id","neg")
-    .text("negative")
+    //.text("negative")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -92,22 +126,22 @@ d3.csv("cities.csv", function(cities){
 
   //NE is blue
   var NE_color = d3.scale.linear()
-    .domain([0,NE])
-    .range([d3.rgb(0,40,255),d3.rgb(0,10,64)]);
+    .domain([0,NE+1])
+    .range([d3.rgb(0,255,255),d3.rgb(0,0,64)]);
 
   //SE is green
   var SE_color = d3.scale.linear()
-    .domain([0,SE])
+    .domain([0,SE+1])
     .range([d3.rgb(0,255,0),d3.rgb(0,64,0)]);
 
   //SW is orange
   var SW_color = d3.scale.linear()
-    .domain([0,SW])
-    .range([d3.rgb(255,154,0),d3.rgb(64,39,0)]);
+    .domain([0,SW+1])
+    .range([d3.rgb(255,255,0),d3.rgb(64,64,0)]);
 
   //NW is red
   var NW_color = d3.scale.linear()
-    .domain([0,NW])
+    .domain([0,NW+1])
     .range([d3.rgb(255,0,0),d3.rgb(64,0,0)]);
 
   var fill = [];
