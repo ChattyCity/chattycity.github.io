@@ -18,6 +18,11 @@
       pointer-events: all;
     }
 
+    .overlay {
+      fill: none;
+      pointer-events: all;
+    }
+
 </style>
 <body>
 
@@ -59,10 +64,18 @@ var path = d3.svg.chord()
     .radius(innerRadius);
 
 var svgp = d3.select("body").append("div")
-    .attr("id","pos")
+    //.attr("id","pos")
     //.text("positive")
   .append("svg")
     .attr("width", width2)
+    .attr("height", height)
+    .append("g")
+    .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+    .append("g");
+
+  svgp.append("rect")
+    .attr("class", "overlay")
+    .attr("width2", width)
     .attr("height", height);
 
 var svg = svgp
@@ -299,5 +312,9 @@ function fade(opacity) {
 });
 });
 });
+
+function zoom() {
+  svgp.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
 
 </script>
