@@ -20,33 +20,7 @@
 
 </style>
 <body>
-<!--  <div id="pos">
-    <table>
-    <tbody>
-      <tr>
-        <td class="diagram"></td>
-      </tr>
-      <tr>
-        <td>positive</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
 
-  <div id="neg">
-    <table>
-    <tbody>
-      <tr>
-        <td class="diagram"></td>
-      </tr>
-      <tr>
-        <td>negative</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-
--->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
@@ -60,7 +34,8 @@ var w = window,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
 var width = x/2 - 20,
-    height = y,
+    width2 = x - 40,
+    height = y - 20,
     innerRadius = Math.min(width, height) * .40 - padding,
     outerRadius = innerRadius + 24;
 
@@ -83,31 +58,28 @@ var layout2 = d3.layout.chord()
 var path = d3.svg.chord()
     .radius(innerRadius);
 
-//var fill = d3.scale.category20();
-
-var svg = d3.select("body").append("div")
+var svgp = d3.select("body").append("div")
     .attr("id","pos")
     //.text("positive")
   .append("svg")
-    .attr("width", width)
-    .attr("height", height)
+    .attr("width", width2)
+    .attr("height", height);
+
+var svg = svgp
   .append("g")
     .attr("class", "circle")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-var svg2 = d3.select("body").append("div")
-    .attr("id","neg")
-    //.text("negative")
-  .append("svg")
-    .attr("width", width)
-    .attr("height", height)
+var svg2 = svgp
   .append("g")
     .attr("class", "circle")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + (width+width2)/2 + "," + height / 2 + ")");
 
 var city;
 var matrix;
 var matrix2;
+var sent_matrix;
+var sent_matrix2;
 
 d3.csv("cities.csv", function(cities){
   city = cities;
@@ -162,6 +134,12 @@ d3.json("matrix_pos.json", function(matrix_pos) {
   matrix = matrix_pos;
   d3.json("matrix_neg.json", function(matrix_neg) {
     matrix2 = matrix_neg;
+
+    d3.json("sent_matrix_pos.json", function(sent_matrix_pos) {
+      sent_matrix = sent_matrix_pos;
+      d3.json("sent_matrix_neg.json", function(sent_matrix_neg) {
+        sent_matrix2 = sent_matrix_neg;
+
     var chord = layout.matrix(matrix);
     var chord2 = layout2.matrix(matrix2);
 
@@ -223,13 +201,17 @@ d3.json("matrix_pos.json", function(matrix_pos) {
     chord.append("title").text(function(d) {
       return city[d.source.index].name
           + " → " + city[d.target.index].name
-          + ": " + formatPercent(d.source.value);
+          + ": " + formatPercent(d.source.value)
+          + "\n"
+          + "average sentiment score: " + d3.round(sent_matrix[d.source.index][d.target.index], 2);
     });
 
     chord2.append("title").text(function(d) {
       return city[d.source.index].name
           + " → " + city[d.target.index].name
-          + ": " + formatPercent(d.source.value);
+          + ": " + formatPercent(d.source.value)
+          + "\n"
+          + "average sentiment score: " + d3.round(sent_matrix2[d.source.index][d.target.index], 2);
     });
 
 var ticks = group.selectAll("g")
@@ -311,6 +293,9 @@ function fade(opacity) {
   };
 }
 
+
+});
+});
 });
 });
 });

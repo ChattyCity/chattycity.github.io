@@ -58,36 +58,48 @@ cities = sorted(cities, key=lambda word: [cities_dict[word]])
 matrix_pos = []
 matrix_neg = []
 
+sent_matrix_pos = []
+sent_matrix_neg = []
+
 for i in cities:
     mp, mn = [], []
+    smp, smn = [], []
     for j in cities:
         count_pos, count_neg = 0, 0
-        for tup in t:
-            if tup[0] == i and tup[1] == j:
-                if float(tup[2]) > 0:
-                    count_pos += 1
-                elif float(tup[2]) < 0:
-                    count_neg += 1
+        sent_pos, sent_neg = 0.0, 0.0
+        #if statement removes cities talking to themselves
+        if i!=j:
+            for tup in t:
+                if tup[0] == i and tup[1] == j:
+                    if float(tup[2]) > 0:
+                        count_pos += 1
+                        sent_pos += float(tup[2])
+                    elif float(tup[2]) < 0:
+                        count_neg += 1
+                        sent_neg += float(tup[2])
 
         mp.append(count_pos)
         mn.append(count_neg)
+        smp.append(sent_pos/count_pos if count_pos > 0 else 0)
+        smn.append(sent_neg/count_neg if count_neg > 0 else 0)
         
     matrix_pos.append(mp)
     matrix_neg.append(mn)
+    sent_matrix_pos.append(smp)
+    sent_matrix_neg.append(smn)
 
 #normalize pos and neg matrices
 total_vol_pos = sum(matrix_pos)
 total_vol_neg = sum(matrix_neg)
 
-
 for i in range(len(matrix_pos)):
     for j in range(len(matrix_pos[i])):
-        matrix_pos[i][j] = float(matrix_pos[i][j])/total_vol_pos if float(matrix_pos[i][j])/total_vol_pos > 0.0005 else 0
-        # 0.5% threashold
+        matrix_pos[i][j] = float(matrix_pos[i][j])/total_vol_pos if float(matrix_pos[i][j])/total_vol_pos > 0.001 else 0
+        # 1% threashold
 for i in range(len(matrix_neg)):
     for j in range(len(matrix_neg[i])):
-        matrix_neg[i][j] = float(matrix_neg[i][j])/total_vol_neg if float(matrix_neg[i][j])/total_vol_neg > 0.0005 else 0
-        # 0.5% threshold
+        matrix_neg[i][j] = float(matrix_neg[i][j])/total_vol_neg if float(matrix_neg[i][j])/total_vol_neg > 0.001 else 0
+        # 1% threshold
         
 #save to json file
 with open(os.path.join(outdir, "matrix_pos.json"),"w") as writefile:
@@ -95,6 +107,12 @@ with open(os.path.join(outdir, "matrix_pos.json"),"w") as writefile:
 
 with open(os.path.join(outdir, "matrix_neg.json"),"w") as writefile:
     simplejson.dump(matrix_neg, writefile)
+
+with open(os.path.join(outdir, "sent_matrix_pos.json"),"w") as writefile:
+    simplejson.dump(sent_matrix_pos, writefile)
+
+with open(os.path.join(outdir, "sent_matrix_neg.json"),"w") as writefile:
+    simplejson.dump(sent_matrix_neg, writefile)
     
 with open(os.path.join(outdir, "cities.csv"),"w") as writefile:
     writefile.write("name,quad,ind\n")
