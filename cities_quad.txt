@@ -1,0 +1,100 @@
+Albany,NE
+Albuquerque,SW
+Anaheim,SW
+Annapolis,NE
+Arlington,SE
+Atlanta,SE
+Augusta,SE
+Aurora,NW
+Austin,SW
+Bakersfield,SW
+Baltimore,NE
+Baton Rouge,SE
+Bismarck,NW
+Boise,NW
+Boston,NE
+Carson City,SW
+Charleston,SE
+Charlotte,SE
+Cheyenne,NW
+Chicago,NE
+Cleveland,NE
+Colorado Springs,SW
+Columbia,SE
+Columbus,NE
+Concord,NE
+Corpus Christi,SE
+Dallas,SE
+Denver,NW
+Des Moines,NE
+Detroit,NE
+Dover,SE
+El Paso,SW
+Fort Worth,SE
+Frankfort,SE
+Fresno,SW
+Harrisburg,NE
+Hartford,NE
+Helena,NW
+Honolulu,SW
+Houston,SE
+Indianapolis,NE
+Jackson,SE
+Jacksonville,SE
+Jefferson City,SE
+Juneau,NW
+Kansas City,SE
+Lansing,NE
+Las Vegas,SW
+Lexington,SE
+Lincoln,NE
+Little Rock,SE
+Long Beach,SW
+Los Angeles,SW
+Louisville,SE
+Madison,NE
+Memphis,SE
+Mesa,SW
+Miami,SE
+Milwaukee,NE
+Minneapolis,NE
+Montgomery,SE
+Montpelier,NE
+Nashville,SE
+New Orleans,SE
+New York,NE
+Oakland,SW
+Oklahoma City,SE
+Olympia,NW
+Omaha,NE
+Philadelphia,NE
+Phoenix,SW
+Pierre,NW
+Pittsburgh,NE
+Portland,NW
+Providence,NE
+Raleigh,SE
+Richmond,NE
+Riverside,SW
+Sacramento,SW
+Saint Paul,NE
+Salem,NE
+Salt Lake City,NW
+San Antonio,SW
+San Diego,SW
+San Francisco,SW
+San Jose,SW
+Santa Ana,SW
+Santa Fe,SW
+Seattle,NW
+Springfield,NE
+St. Louis,SE
+Tallahassee,SE
+Tampa,SE
+Topeka,SE
+Trenton,NE
+Tucson,SW
+Tulsa,SE
+Virginia Beach,SE
+Washington,NE
+Wichita,SE
