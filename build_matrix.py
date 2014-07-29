@@ -39,7 +39,7 @@ for i in cities:
             count += 1
     count_dict[i] = count
 
-cities = sorted(count_dict, key=count_dict.__getitem__,reverse = True)[0:50]
+cities = sorted(count_dict, key=count_dict.__getitem__,reverse = True)[0:40]
 
 
 #order cities using ordered_cities.txt

@@ -3,7 +3,7 @@
 <style>
 
     body {
-      font: 13px sans-serif;
+      font: 11px sans-serif;
     }
     path.chord {
       fill-opacity: .67;
@@ -18,6 +18,11 @@
       pointer-events: all;
     }
 
+    .overlay {
+      fill: none;
+      pointer-events: all;
+    }
+
 </style>
 <body>
 
@@ -25,6 +30,7 @@
 <script>
 
 var padding = 40;
+var boxw = 300;
 
 var w = window,
     d = document,
@@ -33,8 +39,8 @@ var w = window,
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-var width = x/2 - 20,
-    width2 = x - 40,
+var width2 = x - 20,
+    width = (width2-boxw) / 2,
     height = y - 20,
     innerRadius = Math.min(width, height) * .40 - padding,
     outerRadius = innerRadius + 24;
@@ -59,9 +65,17 @@ var path = d3.svg.chord()
     .radius(innerRadius);
 
 var svgp = d3.select("body").append("div")
-    .attr("id","pos")
+    //.attr("id","pos")
     //.text("positive")
   .append("svg")
+    .attr("width", width2)
+    .attr("height", height)
+    .append("g")
+    .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+    .append("g");
+
+  svgp.append("rect")
+    .attr("class", "overlay")
     .attr("width", width2)
     .attr("height", height);
 
@@ -73,7 +87,7 @@ var svg = svgp
 var svg2 = svgp
   .append("g")
     .attr("class", "circle")
-    .attr("transform", "translate(" + (width+width2)/2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + (width*3)/2 + "," + height / 2 + ")");
 
 var city;
 var matrix;
@@ -139,6 +153,60 @@ d3.json("matrix_pos.json", function(matrix_pos) {
       sent_matrix = sent_matrix_pos;
       d3.json("sent_matrix_neg.json", function(sent_matrix_neg) {
         sent_matrix2 = sent_matrix_neg;
+
+// building the info boxx
+  //big box
+      svgp.append("rect")
+      .attr("x", 2*width + 10)
+      .attr("y", 10)
+      .attr("width", boxw)
+      .attr("height", height - 20)
+      .attr("fill", "grey");
+
+  //legend box
+      svgp.append("rect")
+      .attr({
+        x: 2*width+10,
+        y: 20,
+        width: boxw,
+        height: 200,
+        fill: "teal"
+      });
+    //placeholder: US map
+      svgp.append("rect")
+      .attr({
+        x: 2*width+20,
+        y: 30,
+        width: boxw*0.4,
+        height: 80,
+        fill: "red"
+      });
+    //placeholder: mini chord diagram
+      svgp.append("circle")
+      .attr({
+        cx: width2-(boxw*0.25),
+        cy: 100,
+        r: boxw*0.2,
+        fill: "yellow"
+      });
+    //placeholder: legend text
+      svgp.append("rect")
+      .attr({
+        x: 2*width+20,
+        y: 170,
+        width: boxw*0.9,
+        height: 40,
+        fill: "white"
+      });   
+
+      legendtext = "Hover over the diagram for more details about each city. You can also zoom.";
+
+      svgp.append("text")
+      .text(legendtext)
+      .attr("transform", "translate("+((2*width)+25)+",0)")
+      .attr("y",180)
+      .call(wrap, boxw*.8);
+
 
     var chord = layout.matrix(matrix);
     var chord2 = layout2.matrix(matrix2);
@@ -280,7 +348,8 @@ function groupTicks(d) {
 
 // Returns an event handler for fading a given chord group.
 function fade(opacity) {
-  return function(g, i) {
+    return function(g, i) {
+      console.log(city[i]);
     svg.selectAll("path.chord")
         .filter(function(d) { return d.source.index != i && d.target.index != i; })
       //.transition()
@@ -299,5 +368,33 @@ function fade(opacity) {
 });
 });
 });
+
+function zoom() {
+  svgp.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", 0.17 + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + 0.17 + "em").text(word);
+      }
+    }
+  });
+}
 
 </script>

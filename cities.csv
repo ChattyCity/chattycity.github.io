@@ -11,41 +11,31 @@ madison,NE,8
 milwaukee,NE,9
 minneapolis,NE,10
 new york,NE,11
-omaha,NE,12
-philadelphia,NE,13
-pittsburgh,NE,14
-richmond,NE,15
-washington,NE,16
-arlington,SE,0
-atlanta,SE,1
-baton rouge,SE,2
-charlotte,SE,3
-columbia,SE,4
-dallas,SE,5
-fort worth,SE,6
-houston,SE,7
-jackson,SE,8
-kansas city,SE,9
-louisville,SE,10
-memphis,SE,11
-miami,SE,12
-nashville,SE,13
-new orleans,SE,14
-raleigh,SE,15
-st. louis,SE,16
-tampa,SE,17
+philadelphia,NE,12
+pittsburgh,NE,13
+washington,NE,14
+atlanta,SE,0
+charlotte,SE,1
+columbia,SE,2
+dallas,SE,3
+houston,SE,4
+jackson,SE,5
+kansas city,SE,6
+memphis,SE,7
+miami,SE,8
+nashville,SE,9
+new orleans,SE,10
+tampa,SE,11
 austin,SW,0
 las vegas,SW,1
 long beach,SW,2
 los angeles,SW,3
 oakland,SW,4
 phoenix,SW,5
-riverside,SW,6
-sacramento,SW,7
-san antonio,SW,8
-san diego,SW,9
-san francisco,SW,10
-tucson,SW,11
+sacramento,SW,6
+san antonio,SW,7
+san diego,SW,8
+san francisco,SW,9
 denver,NW,0
 portland,NW,1
 seattle,NW,2
