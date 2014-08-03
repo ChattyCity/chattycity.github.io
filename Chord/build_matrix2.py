@@ -105,7 +105,8 @@ for i in cities:
 summary = []
 for i in range(len(cities)):
     #general stats
-    l1 = [cities[i]]
+    cityname = "%s, %s"%(cities[i],quad[cities[i]][0].lower())
+    l1 = [cityname]
     neg = 0
     for j in range(len(cities)):
         neg += matrix_neg[j][i]
@@ -193,7 +194,7 @@ with open(os.path.join(outdir, "cities.csv"),"w") as writefile:
     new = False
     count = 0
     for i in range(len(cities)):
-        writefile.write(cities[i]+","+quad[cities[i]][0]+","+quad[cities[i]][1]+","+str(count)+"\n")
+        writefile.write(cities[i]+","+quad[cities[i]][0].lower()+","+quad[cities[i]][1]+","+str(count)+"\n")
 
         if i<len(cities)-1 and quad[cities[i]][1] != quad[cities[i+1]][1]:
             new = True

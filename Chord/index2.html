@@ -30,7 +30,8 @@
     }
 
     .summary .header, .agg .header {
-      font: 15px sans-serif;
+      font: 16px sans-serif;
+      font-weight: bold;
     }
 
     .circles:hover path.fade {
@@ -75,7 +76,8 @@ var sumdy = 15;
 var sumcityleft = sumtext+100;
 var sumcitypartwidth = 90;
 
-var formatPercent = d3.format(".1%");
+var formatPercent0 = d3.format(".0%");
+var formatPercent1 = d3.format(".1%");
 
 var arc = d3.svg.arc()
     .innerRadius(innerRadius)
@@ -299,14 +301,15 @@ svgp.append("text")
     // header
       summary.append("text")
         .text(function(d){ return d[0][0]; })
-        .attr({ x: sumtext, y: sumtop, class: "header" });
+        .attr({ x: boxw/2, y: sumtop, class: "header"})
+        .attr("text-anchor","middle");
     // total volume
       summary.append("text")
         .text(function(d){ return "total volume: "+ (d[0][1]+d[0][3]) + " tweets"; })
         .attr({ x: sumtext, y: sumtop + sumdy });
     // tweets about city
       summary.append("text")
-        .text(function(d){ return "tweets about "+d[0][0]+": "+ d[0][1]; })
+        .text(function(d){ return "tweets about "+d[0][0]+": "+ d[0][1]+" ("+formatPercent0(d[0][1]/(d[0][1]+d[0][3]))+")"; })
         .attr({ x: sumtext, y: sumtop + sumdy*3 });
     // breakdown
       summary.append("rect")
@@ -319,7 +322,7 @@ svgp.append("text")
         .attr("width", function(d){ return (1-d[0][2])*(boxw-20) - 1; });
     // top 5
       summary.append("text")
-        .text("top 5 cities:")
+        .text("top 5 cities (by volume):")
         .attr({ x: sumtext, y: sumtop + sumdy*5 });
     // city1
       for(var j = 0; j<5; j++){
@@ -339,7 +342,7 @@ svgp.append("text")
        }
     // tweets by city
       summary.append("text")
-        .text(function(d){ return "tweets by "+d[0][0]+": "+ d[0][3]; })
+        .text(function(d){ return "tweets by "+d[0][0]+": "+ d[0][3]+" ("+formatPercent0(d[0][3]/(d[0][1]+d[0][3]))+")"; })
         .attr({ x: sumtext, y: sumtop + sumdy*12 });
     // breakdown
       summary.append("rect")
@@ -349,7 +352,7 @@ svgp.append("text")
         .attr("x", function(d){ return sumtext + d[0][4]*(boxw-20) + 1; })
         .attr("width", function(d){ return (1-d[0][4])*(boxw-20) - 1; });
     // top 5
-      summary.append("text").text("top 5 cities:").attr({ x: sumtext, y: sumtop + sumdy*14 });
+      summary.append("text").text("top 5 cities (by volume):").attr({ x: sumtext, y: sumtop + sumdy*14 });
     // cities
       for(var j = 0; j<5; j++){
         summary.append("text")
@@ -399,11 +402,11 @@ var coverbox = d3.select(".mastersvg")
 
     // Add a mouseover title.
     group.append("title").text(function(d, i) {
-      return city[i].name + ": " + formatPercent(d.value) + " of all negative tweets";
+      return city[i].name + ": " + formatPercent1(d.value) + " of all negative tweets";
     });
 
     group2.append("title").text(function(d, i) {
-      return city[i].name + ": " + formatPercent(d.value) + " of all positive tweets";
+      return city[i].name + ": " + formatPercent1(d.value) + " of all positive tweets";
     });
 
 
@@ -454,7 +457,7 @@ var coverbox = d3.select(".mastersvg")
     chord.append("title").text(function(d) {
       return city[d.source.index].name
           + " → " + city[d.target.index].name
-          + ": " + formatPercent(d.source.value)
+          + ": " + formatPercent1(d.source.value)
           + "\n"
           + "average sentiment score: " + d3.round(sent_matrix_neg[d.source.index][d.target.index], 2);
     });
@@ -462,7 +465,7 @@ var coverbox = d3.select(".mastersvg")
     chord2.append("title").text(function(d) {
       return city[d.source.index].name
           + " → " + city[d.target.index].name
-          + ": " + formatPercent(d.source.value)
+          + ": " + formatPercent1(d.source.value)
           + "\n"
           + "average sentiment score: " + d3.round(sent_matrix_pos[d.source.index][d.target.index], 2);
     });
@@ -532,7 +535,7 @@ function fade() {
 
             chord2.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
 
-            summary.classed("unfade", function(d) { return d[0][0] == city[i].name; })
+            summary.classed("unfade", function(d) { var cityname = (city[i].name+", "+city[i].state); return d[0][0] == cityname; })
 
             agg.classed("aggfade", true);
   };
