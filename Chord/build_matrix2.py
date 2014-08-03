@@ -59,7 +59,7 @@ cities_dict = {}
 count = 0
 with open("ordered_cities.txt","r") as readfile:
     for line in readfile:
-        quad[line.split(",")[0].lower()] = line.split(",")[1][0:2]
+        quad[line.split(",")[0].lower()] = [line.split(",")[1][0:2], line.split(",")[2][0:2]] #state,quad
         cities_dict[line.split(",")[0].lower()] = count
         count += 1
         
@@ -97,59 +97,12 @@ for i in cities:
     sent_matrix_pos.append(smp)
     sent_matrix_neg.append(smn)
 
-#build legend dataset
-#schema for each city:        [[city, #pos about city, #neg about city, #pos by city, #neg by city],
-# --> top 5 talking about      [[city, neg, pos],[city, neg, pos],[city, neg, pos],[city, neg, pos],[city, neg, pos]],
-# --> top 5 tweets by          [[city, neg, pos],[city, neg, pos],[city, neg, pos],[city, neg, pos],[city, neg, pos]]]
-
-legend = []
-for i in range(len(cities)):
-    #general stats
-    l1 = [cities[i]]
-    about = 0
-    for j in range(len(cities)):
-        about += matrix_neg[j][i]
-    l1.append(about)
-    about = 0
-    for j in range(len(cities)):
-        about += matrix_pos[j][i]
-    l1.append(about)
-    l1.append(sum(matrix_neg[i]))
-    l1.append(sum(matrix_pos[i]))
-
-    #others talking about city X    
-    max_dict = {}
-    max_dict_vals = {}
-    top5 = []
-    for j in range(len(cities)):
-        max_dict[j] = matrix_pos[i][j] + matrix_neg[i][j]
-        max_dict_vals[j] = [matrix_neg[i][j], matrix_pos[i][j]]
-    top5 = sorted(max_dict, key=max_dict.__getitem__,reverse = True)[0:5]
-    l2 = []
-    for j in top5:
-        l2.append([cities[j],max_dict_vals[j][0],max_dict_vals[j][1]])
-        
-    #city X talking about others
-    max_dict = {}
-    max_dict_vals = {}
-    top5 = []
-    for j in range(len(cities)):
-        max_dict[j] = matrix_pos[j][i] + matrix_neg[j][i]
-        max_dict_vals[j] = [matrix_neg[j][i], matrix_pos[j][i]]
-    top5 = sorted(max_dict, key=max_dict.__getitem__,reverse = True)[0:5]
-    l3 = []
-    for j in top5:
-        l3.append([cities[j],max_dict_vals[j][0],max_dict_vals[j][1]])
-    
-    legend.append([l1,l2,l3])
-
-
-#build legend2 dataset
+#build summary dataset
 #schema for each city:        [[city, #total about, %neg, #total by, %neg],
-# --> top 5 talking about      [[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%]],
-# --> top 5 tweets by          [[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%]]]
+# --> top 5 talking about      [[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[max vol portion]],
+# --> top 5 tweets by          [[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[max vol portion]]]
 
-legend2 = []
+summary = []
 for i in range(len(cities)):
     #general stats
     l1 = [cities[i]]
@@ -177,6 +130,12 @@ for i in range(len(cities)):
     l2 = []
     for j in top5:
         l2.append([cities[j],max_dict_vals[j][0],max_dict_vals[j][1]])
+    maxvp = 0
+    localmax = 0
+    for l in l2:
+        localmax = max(l[1]*l[2], l[1]*(1-l[2]))
+        maxvp = max(maxvp, localmax)
+    l2.append([maxvp])
         
     #city X talking about others
     max_dict = {}
@@ -189,10 +148,16 @@ for i in range(len(cities)):
     l3 = []
     for j in top5:
         l3.append([cities[j],max_dict_vals[j][0],max_dict_vals[j][1]])
+    maxvp = 0
+    localmax = 0
+    for l in l3:
+        localmax = max(l[1]*l[2], l[1]*(1-l[2]))
+        maxvp = max(maxvp, localmax)
+    l3.append([maxvp])
     
-    legend2.append([l1,l2,l3])
+    summary.append([l1,l2,l3])
 
-print legend2
+#print summary
 
 #normalize pos and neg matrices
 total_vol_pos = sum(matrix_pos)
@@ -224,13 +189,13 @@ with open(os.path.join(outdir, "sent_matrix_neg.json"),"w") as writefile:
     simplejson.dump(sent_matrix_neg, writefile)
     
 with open(os.path.join(outdir, "cities.csv"),"w") as writefile:
-    writefile.write("name,quad,ind\n")
+    writefile.write("name,state,quad,ind\n")
     new = False
     count = 0
     for i in range(len(cities)):
-        writefile.write(cities[i]+","+quad[cities[i]]+","+str(count)+"\n")
+        writefile.write(cities[i]+","+quad[cities[i]][0]+","+quad[cities[i]][1]+","+str(count)+"\n")
 
-        if i<len(cities)-1 and quad[cities[i]] != quad[cities[i+1]]:
+        if i<len(cities)-1 and quad[cities[i]][1] != quad[cities[i+1]][1]:
             new = True
         if new:
             count = 0
@@ -238,8 +203,5 @@ with open(os.path.join(outdir, "cities.csv"),"w") as writefile:
         else:
             count += 1
 
-with open(os.path.join(outdir, "legend.json"), "w") as writefile:
-    simplejson.dump(legend, writefile)
-    
-with open(os.path.join(outdir, "legend2.json"), "w") as writefile:
-    simplejson.dump(legend2, writefile)
+with open(os.path.join(outdir, "summary.json"), "w") as writefile:
+    simplejson.dump(summary, writefile)

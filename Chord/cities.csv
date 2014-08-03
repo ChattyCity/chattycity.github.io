@@ -1,41 +1,41 @@
-name,quad,ind
-baltimore,NE,0
-boston,NE,1
-chicago,NE,2
-cleveland,NE,3
-columbus,NE,4
-detroit,NE,5
-indianapolis,NE,6
-lincoln,NE,7
-madison,NE,8
-milwaukee,NE,9
-minneapolis,NE,10
-new york,NE,11
-philadelphia,NE,12
-pittsburgh,NE,13
-washington,NE,14
-atlanta,SE,0
-charlotte,SE,1
-columbia,SE,2
-dallas,SE,3
-houston,SE,4
-jackson,SE,5
-kansas city,SE,6
-memphis,SE,7
-miami,SE,8
-nashville,SE,9
-new orleans,SE,10
-tampa,SE,11
-austin,SW,0
-las vegas,SW,1
-long beach,SW,2
-los angeles,SW,3
-oakland,SW,4
-phoenix,SW,5
-sacramento,SW,6
-san antonio,SW,7
-san diego,SW,8
-san francisco,SW,9
-denver,NW,0
-portland,NW,1
-seattle,NW,2
+name,state,quad,ind
+baltimore,MD,NE,0
+boston,MA,NE,1
+chicago,IL,NE,2
+cleveland,OH,NE,3
+columbus,OH,NE,4
+detroit,MI,NE,5
+indianapolis,IN,NE,6
+lincoln,NE,NE,7
+madison,WI,NE,8
+milwaukee,WI,NE,9
+minneapolis,MN,NE,10
+new york,NY,NE,11
+philadelphia,PA,NE,12
+pittsburgh,PA,NE,13
+washington,DC,NE,14
+atlanta,GA,SE,0
+austin,TX,SE,1
+charlotte,NC,SE,2
+columbia,SC,SE,3
+dallas,TX,SE,4
+houston,TX,SE,5
+jackson,MS,SE,6
+kansas city,KS,SE,7
+memphis,TN,SE,8
+miami,FL,SE,9
+nashville,TN,SE,10
+new orleans,LA,SE,11
+san antonio,TX,SE,12
+tampa,FL,SE,13
+denver,CO,SW,0
+las vegas,NV,SW,1
+long beach,CA,SW,2
+los angeles,CA,SW,3
+oakland,CA,SW,4
+phoenix,AZ,SW,5
+sacramento,CA,SW,6
+san diego,CA,SW,7
+san francisco,CA,SW,8
+portland,OR,NW,0
+seattle,WA,NW,1

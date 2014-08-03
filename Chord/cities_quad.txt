@@ -1,100 +1,100 @@
-Albany,NE
-Albuquerque,SW
-Anaheim,SW
-Annapolis,NE
-Arlington,SE
-Atlanta,SE
-Augusta,SE
-Aurora,NW
-Austin,SW
-Bakersfield,SW
-Baltimore,NE
-Baton Rouge,SE
-Bismarck,NW
-Boise,NW
-Boston,NE
-Carson City,SW
-Charleston,SE
-Charlotte,SE
-Cheyenne,NW
-Chicago,NE
-Cleveland,NE
-Colorado Springs,SW
-Columbia,SE
-Columbus,NE
-Concord,NE
-Corpus Christi,SE
-Dallas,SE
-Denver,NW
-Des Moines,NE
-Detroit,NE
-Dover,SE
-El Paso,SW
-Fort Worth,SE
-Frankfort,SE
-Fresno,SW
-Harrisburg,NE
-Hartford,NE
-Helena,NW
-Honolulu,SW
-Houston,SE
-Indianapolis,NE
-Jackson,SE
-Jacksonville,SE
-Jefferson City,SE
-Juneau,NW
-Kansas City,SE
-Lansing,NE
-Las Vegas,SW
-Lexington,SE
-Lincoln,NE
-Little Rock,SE
-Long Beach,SW
-Los Angeles,SW
-Louisville,SE
-Madison,NE
-Memphis,SE
-Mesa,SW
-Miami,SE
-Milwaukee,NE
-Minneapolis,NE
-Montgomery,SE
-Montpelier,NE
-Nashville,SE
-New Orleans,SE
-New York,NE
-Oakland,SW
-Oklahoma City,SE
-Olympia,NW
-Omaha,NE
-Philadelphia,NE
-Phoenix,SW
-Pierre,NW
-Pittsburgh,NE
-Portland,NW
-Providence,NE
-Raleigh,SE
-Richmond,NE
-Riverside,SW
-Sacramento,SW
-Saint Paul,NE
-Salem,NE
-Salt Lake City,NW
-San Antonio,SW
-San Diego,SW
-San Francisco,SW
-San Jose,SW
-Santa Ana,SW
-Santa Fe,SW
-Seattle,NW
-Springfield,NE
-St. Louis,SE
-Tallahassee,SE
-Tampa,SE
-Topeka,SE
-Trenton,NE
-Tucson,SW
-Tulsa,SE
-Virginia Beach,SE
-Washington,NE
-Wichita,SE
+Albany,NY,NE
+Albuquerque,NM,SW
+Anaheim,CA,SW
+Annapolis,MD,NE
+Arlington,TX,SE
+Atlanta,GA,SE
+Augusta,GA,SE
+Aurora,CO,SW
+Austin,TX,SE
+Bakersfield,CA,SW
+Baltimore,MD,NE
+Baton Rouge,LA,SE
+Bismarck,ND,NE
+Boise,ID,NW
+Boston,MA,NE
+Carson City,NV,SW
+Charleston,SC,SE
+Charlotte,NC,SE
+Cheyenne,WY,NW
+Chicago,IL,NE
+Cleveland,OH,NE
+Colorado Springs,CO,SW
+Columbia,SC,SE
+Columbus,OH,NE
+Concord,NH,NE
+Corpus Christi,TX,SE
+Dallas,TX,SE
+Denver,CO,SW
+Des Moines,IA,NE
+Detroit,MI,NE
+Dover,DE,NE
+El Paso,TX,SE
+Fort Worth,TX,SE
+Frankfort,KY,SE
+Fresno,CA,SW
+Harrisburg,IL,NE
+Hartford,CT,NE
+Helena,AL,SE
+Honolulu,HI,SW
+Houston,TX,SE
+Indianapolis,IN,NE
+Jackson,MS,SE
+Jacksonville,FL,SE
+Jefferson City,MO,SE
+Juneau,AK,NW
+Kansas City,KS,SE
+Lansing,MI,NE
+Las Vegas,NV,SW
+Lexington,KY,SE
+Lincoln,NE,NE
+Little Rock,AR,SE
+Long Beach,CA,SW
+Los Angeles,CA,SW
+Louisville,KY,SE
+Madison,WI,NE
+Memphis,TN,SE
+Mesa,AZ,SW
+Miami,FL,SE
+Milwaukee,WI,NE
+Minneapolis,MN,NE
+Montgomery,AL,SE
+Montpelier,VT,NE
+Nashville,TN,SE
+New Orleans,LA,SE
+New York,NY,NE
+Oakland,CA,SW
+Oklahoma City,OK,SE
+Olympia,WA,NW
+Omaha,NE,NE
+Philadelphia,PA,NE
+Phoenix,AZ,SW
+Pierre,SD,NE
+Pittsburgh,PA,NE
+Portland,OR,NW
+Providence,RI,NE
+Raleigh,NC,SE
+Richmond,VA,NE
+Riverside,CA,SW
+Sacramento,CA,SW
+Saint Paul,MN,NE
+Salem,MA,NE
+Salt Lake City,UT,NW
+San Antonio,TX,SE
+San Diego,CA,SW
+San Francisco,CA,SW
+San Jose,CA,SW
+Santa Ana,CA,SW
+Santa Fe,CA,SW
+Seattle,WA,NW
+Springfield,IL,NE
+St. Louis,MO,SE
+Tallahassee,FL,SE
+Tampa,FL,SE
+Topeka,KS,SE
+Trenton,NJ,NE
+Tucson,AZ,SW
+Tulsa,OK,SE
+Virginia Beach,VA,SE
+Washington,DC,NE
+Wichita,KS,SE

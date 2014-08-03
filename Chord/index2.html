@@ -5,28 +5,51 @@
     body {
       font: 11px sans-serif;
     }
+
     path.chord {
       fill-opacity: .67;
       stroke: #000;
       stroke-width: .1px;
     }
+
     div {
       float: left;
     }
+
     .circle circle {
       fill: none;
       pointer-events: all;
     }
 
-    .overlay {
-      fill: none;
-      pointer-events: all;
+    .summary {
+      opacity: 0;
     }
 
+    .extend_arc {
+      opacity: 0;
+    }
+
+    .summary .header, .agg .header {
+      font: 15px sans-serif;
+    }
+
+
+    path.fade{
+      display: none;
+    }
+
+    .circle:hover path.fade {
+      display: none;
+    }
+
+    path.unfade{
+      display: block;
+    }
 </style>
 <body>
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3.min.js"></script>
+
 <script>
 
 var padding = 40;
@@ -44,6 +67,12 @@ var width2 = x - 20,
     height = y - 20,
     innerRadius = Math.min(width, height) * .40 - padding,
     outerRadius = innerRadius + 24;
+
+var sumtop = 240;
+var sumtext = 10;
+var sumdy = 15;
+var sumcityleft = sumtext+100;
+var sumcitypartwidth = 90;
 
 var formatPercent = d3.format(".1%");
 
@@ -64,9 +93,7 @@ var layout2 = d3.layout.chord()
 var path = d3.svg.chord()
     .radius(innerRadius);
 
-var svgp = d3.select("body").append("div")
-    //.attr("id","pos")
-    //.text("positive")
+var svgp = d3.select("body").append("div").attr("id","viz")
   .append("svg")
     .attr("width", width2)
     .attr("height", height)
@@ -74,26 +101,29 @@ var svgp = d3.select("body").append("div")
     .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
     .append("g");
 
-  svgp.append("rect")
-    .attr("class", "overlay")
-    .attr("width", width2)
-    .attr("height", height);
-
 var svg = svgp
   .append("g")
     .attr("class", "circle")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + ((width / 2)+boxw) + "," + height / 2 + ")");
 
 var svg2 = svgp
   .append("g")
     .attr("class", "circle")
-    .attr("transform", "translate(" + (width*3)/2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + ((width*3)/2 + boxw) + "," + height / 2 + ")");
+
+
+      svg.append("circle")
+          .attr("r", outerRadius);
+
+      svg2.append("circle")
+          .attr("r", outerRadius);
 
 var city;
-var matrix;
-var matrix2;
-var sent_matrix;
-var sent_matrix2;
+var summary_data;
+var matrix_pos;
+var matrix_neg;
+var sent_matrix_pos;
+var sent_matrix_neg;
 
 d3.csv("cities.csv", function(cities){
   city = cities;
@@ -110,25 +140,25 @@ d3.csv("cities.csv", function(cities){
     if (city[i].quad == "NW") NW++;
   };
 
-  //NE is blue
+  //NE is green
   var NE_color = d3.scale.linear()
     .domain([0,NE+1])
-    .range([d3.rgb(0,255,255),d3.rgb(0,0,64)]);
-
-  //SE is green
+    .range([d3.rgb(0,255,0),d3.rgb(0,64,0)]);
+    
+  //SE is blue
   var SE_color = d3.scale.linear()
     .domain([0,SE+1])
-    .range([d3.rgb(0,255,0),d3.rgb(0,64,0)]);
+    .range([d3.rgb(0,255,255),d3.rgb(0,0,64)]);
 
-  //SW is orange
+  //SW is red
   var SW_color = d3.scale.linear()
     .domain([0,SW+1])
-    .range([d3.rgb(255,255,0),d3.rgb(64,64,0)]);
+    .range([d3.rgb(255,0,0),d3.rgb(64,0,0)]);
 
-  //NW is red
+  //NW is yellow
   var NW_color = d3.scale.linear()
     .domain([0,NW+1])
-    .range([d3.rgb(255,0,0),d3.rgb(64,0,0)]);
+    .range([d3.rgb(255,255,0),d3.rgb(64,64,0)]);
 
   var fill = [];
   for (var i = 0; i < NE; i++){
@@ -144,72 +174,214 @@ d3.csv("cities.csv", function(cities){
     fill.push(NW_color(i));
   };
 
-d3.json("matrix_pos.json", function(matrix_pos) {
-  matrix = matrix_pos;
-  d3.json("matrix_neg.json", function(matrix_neg) {
-    matrix2 = matrix_neg;
 
-    d3.json("sent_matrix_pos.json", function(sent_matrix_pos) {
-      sent_matrix = sent_matrix_pos;
-      d3.json("sent_matrix_neg.json", function(sent_matrix_neg) {
-        sent_matrix2 = sent_matrix_neg;
+d3.json("summary.json", function(summary) {
+  summary_data = summary;
 
-// building the info boxx
+d3.json("matrix_pos.json", function(matrix_p) {
+  matrix_pos = matrix_p;
+
+  d3.json("matrix_neg.json", function(matrix_n) {
+    matrix_neg = matrix_n;
+
+    d3.json("sent_matrix_pos.json", function(sent_matrix_p) {
+      sent_matrix_pos = sent_matrix_p;
+
+      d3.json("sent_matrix_neg.json", function(sent_matrix_n) {
+        sent_matrix_neg = sent_matrix_n;
+
+// info boxx
+
+//title
+
+svgp.append("text")
+  .text("--Title of Chart-")
+  .attr("font-size", 40)
+  .attr("x", 0)
+  .attr("y", 30);
+
+
   //big box
       svgp.append("rect")
-      .attr("x", 2*width + 10)
-      .attr("y", 10)
+      .attr("x", 0)
+      .attr("y", 0)
       .attr("width", boxw)
-      .attr("height", height - 20)
-      .attr("fill", "grey");
+      .attr("height", height)
+      .attr("fill", "grey")
+      .attr("fill-opacity",0.1);
 
-  //legend box
-      svgp.append("rect")
-      .attr({
-        x: 2*width+10,
-        y: 20,
-        width: boxw,
-        height: 200,
-        fill: "teal"
-      });
-    //placeholder: US map
-      svgp.append("rect")
-      .attr({
-        x: 2*width+20,
-        y: 30,
-        width: boxw*0.4,
-        height: 80,
-        fill: "red"
-      });
-    //placeholder: mini chord diagram
-      svgp.append("circle")
-      .attr({
-        cx: width2-(boxw*0.25),
-        cy: 100,
-        r: boxw*0.2,
-        fill: "yellow"
-      });
-    //placeholder: legend text
-      svgp.append("rect")
-      .attr({
-        x: 2*width+20,
-        y: 170,
-        width: boxw*0.9,
-        height: 40,
-        fill: "white"
-      });   
+    //map png
+    svgp.append("svg:image")
+       .attr("xlink:href", "USmap.png")
+       .attr("width", "120px")
+       .attr("height", "80px")
+       .attr({
+        x: 10,
+        y: 40
+       });
+
+
+//legend diagram
+
+    var legend_data = [
+      [ 8010, 16145, 8090, 8045],
+      [ 1951, 10048, 2060, 6171],
+      [11975,  5871, 8916, 2868],
+      [ 1013,   990,  940, 6907]
+    ];
+
+    var legend_fill = [d3.rgb(0,255,0), d3.rgb(0,100,164), d3.rgb(255,0,0), d3.rgb(255,255,0)];
+
+    var layout3 = d3.layout.chord()
+        .padding(.05)
+        .sortSubgroups(d3.descending);
+
+    var chord3 = layout3.matrix(legend_data);
+
+    var legend_arc = d3.svg.arc()
+        .innerRadius(50)
+        .outerRadius(60);
+
+    var legend_path = d3.svg.chord()
+        .radius(50);
+
+    var svg3 = svgp
+      .append("g")
+      .attr("class", "circle")
+      .attr("transform", "translate(" + (225) + "," + 110 + ")");
+
+    var group3 = svg3.selectAll(".group")
+      .data(layout3.groups)
+      .enter().append("g")
+      .attr("class", "group");
+
+    var groupPath3 = group3.append("path")
+        .attr("id", function(d, i) { return "group" + i; })
+        .attr("d", legend_arc)
+        .style("fill", function(d, i) { return legend_fill[i]; });
+
+    var chord3 = svg3.selectAll(".chord")
+        .data(layout3.chords)
+      .enter().append("path")
+        .attr("class", "chord")
+        .style("fill", function(d) { return legend_fill[d.target.index]; })
+        .attr("d", legend_path)
+        .style("opacity", 1);
+
+// legend text
 
       legendtext = "Hover over the diagram for more details about each city. You can also zoom.";
 
       svgp.append("text")
       .text(legendtext)
-      .attr("transform", "translate("+((2*width)+25)+",0)")
+      .attr("transform", "translate("+sumtext+",0)")
       .attr("y",180)
-      .call(wrap, boxw*.8);
+      .call(wrap, boxw-20);
 
+    //agg text
+    var agg = svgp.append("g")
+      .attr("class","agg")
+      .append("text")
+      .text("total volume: xxx tweets")
+      .attr({x: sumtext, y: sumtop, class: "header"});
 
-    var chord = layout.matrix(matrix);
-    var chord2 = layout2.matrix(matrix2);
+    // summary box
+    var summary = svgp.selectAll(".summary")
+      .data(summary_data)
+      .enter()
+      .append("g")
+      .attr("class", "summary");
+
+    // header
+      summary.append("text")
+        .text(function(d){ return d[0][0]; })
+        .attr({ x: sumtext, y: sumtop, class: "header" });
+    // total volume
+      summary.append("text")
+        .text(function(d){ return "total volume: "+ (d[0][1]+d[0][3]) + " tweets"; })
+        .attr({ x: sumtext, y: sumtop + sumdy });
+    // tweets about city
+      summary.append("text")
+        .text(function(d){ return "tweets about "+d[0][0]+": "+ d[0][1]; })
+        .attr({ x: sumtext, y: sumtop + sumdy*3 });
+    // breakdown
+      summary.append("rect")
+        .attr({ x: sumtext, y: sumtop + sumdy*3 + 6, height: 12, fill: "red" })
+        .attr("width", function(d){ return d[0][2]*(boxw-20) - 1; });
+
+      summary.append("rect")
+        .attr({ y: sumtop + sumdy*3 + 6, height: 12, fill: "green" })
+        .attr("x", function(d){ return sumtext + d[0][2]*(boxw-20) + 1; })
+        .attr("width", function(d){ return (1-d[0][2])*(boxw-20) - 1; });
+    // top 5
+      summary.append("text")
+        .text("top 5 cities:")
+        .attr({ x: sumtext, y: sumtop + sumdy*5 });
+    // city1
+      for(var j = 0; j<5; j++){
+        summary.append("text")
+          .text(function(d){ return d[1][j][0]; })
+          .attr({ x: sumtext + 10, y: sumtop + sumdy*(6+j) });
+
+        summary.append("rect")
+          .attr({ y: sumtop + sumdy*(5+j) + 6, height: 12, fill: "red" })
+          .attr("x", function(d){ return summary_city(d[1][0+j][1], d[1][0+j][2], d[1][5][0])[0]; })
+          .attr("width", function(d){ return summary_city(d[1][0+j][1], d[1][0+j][2], d[1][5][0])[1]; }); 
+
+        summary.append("rect")
+          .attr({ y: sumtop + sumdy*(5+j) + 6, height: 12, fill: "green" })
+          .attr("x", sumcityleft+sumcitypartwidth+1)
+          .attr("width", function(d){ return summary_city(d[1][0+j][1], d[1][0+j][2], d[1][5][0])[2]; });
+       }
+    // tweets by city
+      summary.append("text")
+        .text(function(d){ return "tweets by "+d[0][0]+": "+ d[0][3]; })
+        .attr({ x: sumtext, y: sumtop + sumdy*12 });
+    // breakdown
+      summary.append("rect")
+        .attr({ x: sumtext, y: sumtop + sumdy*12 + 6, height: 12, fill: "red" })
+        .attr("width", function(d){ return d[0][4]*(boxw-20) - 1; });
+      summary.append("rect").attr({ y: sumtop + sumdy*12 + 6, height: 12, fill: "green" })
+        .attr("x", function(d){ return sumtext + d[0][4]*(boxw-20) + 1; })
+        .attr("width", function(d){ return (1-d[0][4])*(boxw-20) - 1; });
+    // top 5
+      summary.append("text").text("top 5 cities:").attr({ x: sumtext, y: sumtop + sumdy*14 });
+    // cities
+      for(var j = 0; j<5; j++){
+        summary.append("text")
+          .text(function(d){ return d[2][j][0]; })
+          .attr({ x: sumtext + 10, y: sumtop + sumdy*(15+j) });
+
+        summary.append("rect")
+          .attr({ y: sumtop + sumdy*(14+j) + 6, height: 12, fill: "red" })
+          .attr("x", function(d){ return summary_city(d[2][0+j][1], d[2][0+j][2], d[2][5][0])[0]; })
+          .attr("width", function(d){ return summary_city(d[2][0+j][1], d[2][0+j][2], d[2][5][0])[1]; });
+        
+        summary.append("rect")
+          .attr({ y: sumtop + sumdy*(14+j) + 6, height: 12, fill: "green" })
+          .attr("x", sumcityleft+sumcitypartwidth+1)
+          .attr("width", function(d){ return summary_city(d[2][0+j][1], d[2][0+j][2], d[2][5][0])[2]; });
+      }
+
+/*
+var coverbox = svgp.append("rect")
+  .attr({
+    x: 0, y:0, width: boxw, height: height, fill: "black"
+  });
+
+coverbox.on("mousedown.zoom", null);
+coverbox.on("mousemove.zoom", null);
+coverbox.on("dblclick.zoom", null);
+coverbox.on("touchstart.zoom", null);
+coverbox.on("wheel.zoom", null);
+coverbox.on("mousewheel.zoom", null);
+coverbox.on("MozMousePixelScroll.zoom", null);
+*/
+
+// main charts
+
+    var chord = layout.matrix(matrix_neg);
+    var chord2 = layout2.matrix(matrix_pos);
 
     // Add a group per neighborhood.
     var group = svg.selectAll(".group")
@@ -226,14 +398,21 @@ d3.json("matrix_pos.json", function(matrix_pos) {
         .on("mouseover", fade(.05))
         .on("mouseout", fade(1));
 
+
+
+//
+
+
+
     // Add a mouseover title.
     group.append("title").text(function(d, i) {
-      return city[i].name + ": " + formatPercent(d.value) + " of all positive tweets";
+      return city[i].name + ": " + formatPercent(d.value) + " of all negative tweets";
     });
 
     group2.append("title").text(function(d, i) {
-      return city[i].name + ": " + formatPercent(d.value) + " of all negative tweets";
+      return city[i].name + ": " + formatPercent(d.value) + " of all positive tweets";
     });
+
 
     // Add the group arc.
     var groupPath = group.append("path")
@@ -246,6 +425,19 @@ d3.json("matrix_pos.json", function(matrix_pos) {
         .attr("d", arc)
         .style("fill", function(d, i) { return fill[i]; });
 
+
+    var extend_arc = d3.svg.arc()
+        .innerRadius(outerRadius)
+        .outerRadius(outerRadius+50);
+
+//proximity detenction for hover
+    var groupPathExtend= group.append("path")
+        .attr("class", "extend_arc")
+        .attr("d", extend_arc);
+
+    var groupPath2Extend= group2.append("path")
+        .attr("class", "extend_arc")
+        .attr("d", extend_arc);
 
     // Add the chords.
     var chord = svg.selectAll(".chord")
@@ -271,7 +463,7 @@ d3.json("matrix_pos.json", function(matrix_pos) {
           + " → " + city[d.target.index].name
           + ": " + formatPercent(d.source.value)
           + "\n"
-          + "average sentiment score: " + d3.round(sent_matrix[d.source.index][d.target.index], 2);
+          + "average sentiment score: " + d3.round(sent_matrix_neg[d.source.index][d.target.index], 2);
     });
 
     chord2.append("title").text(function(d) {
@@ -279,7 +471,7 @@ d3.json("matrix_pos.json", function(matrix_pos) {
           + " → " + city[d.target.index].name
           + ": " + formatPercent(d.source.value)
           + "\n"
-          + "average sentiment score: " + d3.round(sent_matrix2[d.source.index][d.target.index], 2);
+          + "average sentiment score: " + d3.round(sent_matrix_pos[d.source.index][d.target.index], 2);
     });
 
 var ticks = group.selectAll("g")
@@ -328,13 +520,6 @@ ticks2.append("text")
     .text(function(d) { return d.label; });
 
 
-//svg.append("circle")
-//    .attr("r", innerRadius);
-
-//svg2.append("circle")
-//    .attr("r", innerRadius);
-
-
 // Returns an array of tick angles and labels, given a group.
 function groupTicks(d) {
   var k = (d.endAngle - d.startAngle) / 2;
@@ -349,20 +534,57 @@ function groupTicks(d) {
 // Returns an event handler for fading a given chord group.
 function fade(opacity) {
     return function(g, i) {
-      console.log(city[i]);
+
+    if (opacity == 0.05) {
+      svgp.selectAll(".summary")
+          .filter(function(d) { 
+            return d[0][0] != city[i].name;
+          })
+          .style("opacity", 0);
+
+      svgp.selectAll(".summary")
+          .filter(function(d) { 
+            return d[0][0] == city[i].name;
+          })
+          .style("opacity", 1);
+
+      svgp.select(".agg")
+        .style("opacity", 0);
+
+    chord.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
+
+    chord2.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
+
+    }
+    else {
+      svgp.selectAll(".summary")
+          .style("opacity", 0);
+
+      svgp.select(".agg")
+        .style("opacity", 1);
+
+    chord.classed("unfade", function(p) { return p.source.index == i && p.target.index == i; });
+
+    chord2.classed("unfade", function(p) { return p.source.index == i && p.target.index == i; });
+
+    }
+/*
     svg.selectAll("path.chord")
         .filter(function(d) { return d.source.index != i && d.target.index != i; })
-      //.transition()
         .style("opacity", opacity);
 
     svg2.selectAll("path.chord")
         .filter(function(d) { return d.source.index != i && d.target.index != i; })
-      //.transition()
         .style("opacity", opacity);
+
+*/
+
   };
+
 }
 
 
+});
 });
 });
 });
@@ -395,6 +617,19 @@ function wrap(text, width) {
       }
     }
   });
+}
+
+function summary_city(total, neg_p, maxval) {
+  var r1 = sumcityleft + (((maxval - (total*neg_p))/maxval)*sumcitypartwidth);
+  var r2 = (((total*neg_p)/maxval)*sumcitypartwidth)-1;
+  var r3 = (((total*(1-neg_p))/maxval)*sumcitypartwidth)-1;
+  if (r2<1){
+    r2 = 0
+  }
+  if (r2<1){
+    r2 = 0
+  }
+  return [r1, r2, r3];
 }
 
 </script>
