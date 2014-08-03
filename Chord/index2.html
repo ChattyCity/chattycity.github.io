@@ -117,10 +117,10 @@ var svg2 = svgp
     .attr("transform", "translate(" + ((width*3)/2 + boxw) + "," + height / 2 + ")");
 
 svg.append("circle")
-  .attr("r", innerRadius);
+  .attr("r", outerRadius);
 
 svg2.append("circle")
-  .attr("r", innerRadius);
+  .attr("r", outerRadius);
 
 var city;
 var summary_data;
