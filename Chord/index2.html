@@ -22,7 +22,7 @@
     }
 
     .summary {
-      opacity: 0;
+      visibility: hidden;
     }
 
     .extend_arc {
@@ -33,18 +33,19 @@
       font: 15px sans-serif;
     }
 
-
-    path.fade{
-      display: none;
+    .circles:hover path.fade {
+      visibility: hidden;
     }
 
-    .circle:hover path.fade {
-      display: none;
+    .circles:hover g.unfade {
+      visibility: visible;
     }
 
-    path.unfade{
-      display: block;
+    .circles:hover g.aggfade {
+      visibility: hidden;
     }
+
+
 </style>
 <body>
 
@@ -97,9 +98,11 @@ var svgp = d3.select("body").append("div").attr("id","viz")
   .append("svg")
     .attr("width", width2)
     .attr("height", height)
+    .attr("class","mastersvg")
     .append("g")
     .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
-    .append("g");
+    .append("g")
+    .attr("class","circles");
 
 var svg = svgp
   .append("g")
@@ -111,12 +114,11 @@ var svg2 = svgp
     .attr("class", "circle")
     .attr("transform", "translate(" + ((width*3)/2 + boxw) + "," + height / 2 + ")");
 
+svg.append("circle")
+  .attr("r", innerRadius);
 
-      svg.append("circle")
-          .attr("r", outerRadius);
-
-      svg2.append("circle")
-          .attr("r", outerRadius);
+svg2.append("circle")
+  .attr("r", innerRadius);
 
 var city;
 var summary_data;
@@ -279,14 +281,16 @@ svgp.append("text")
       .call(wrap, boxw-20);
 
     //agg text
-    var agg = svgp.append("g")
+    var agg = d3.select("g.circles").append("g")
       .attr("class","agg")
-      .append("text")
+      .append("g");
+
+      agg.append("text")
       .text("total volume: xxx tweets")
       .attr({x: sumtext, y: sumtop, class: "header"});
 
     // summary box
-    var summary = svgp.selectAll(".summary")
+    var summary = d3.select("g.circles").selectAll(".summary")
       .data(summary_data)
       .enter()
       .append("g")
@@ -363,20 +367,13 @@ svgp.append("text")
           .attr("width", function(d){ return summary_city(d[2][0+j][1], d[2][0+j][2], d[2][5][0])[2]; });
       }
 
-/*
-var coverbox = svgp.append("rect")
+
+var coverbox = d3.select(".mastersvg")
+  .append("rect")
   .attr({
-    x: 0, y:0, width: boxw, height: height, fill: "black"
+    x: 0, y:0, width: boxw, height: height, opacity: 0
   });
 
-coverbox.on("mousedown.zoom", null);
-coverbox.on("mousemove.zoom", null);
-coverbox.on("dblclick.zoom", null);
-coverbox.on("touchstart.zoom", null);
-coverbox.on("wheel.zoom", null);
-coverbox.on("mousewheel.zoom", null);
-coverbox.on("MozMousePixelScroll.zoom", null);
-*/
 
 // main charts
 
@@ -388,17 +385,13 @@ coverbox.on("MozMousePixelScroll.zoom", null);
         .data(layout.groups)
       .enter().append("g")
         .attr("class", "group")
-        .on("mouseover", fade(.05))
-        .on("mouseout", fade(1));
+        .on("mouseover", fade());
 
     var group2 = svg2.selectAll(".group")
         .data(layout2.groups)
       .enter().append("g")
         .attr("class", "group")
-        .on("mouseover", fade(.05))
-        .on("mouseout", fade(1));
-
-
+        .on("mouseover", fade());
 
 //
 
@@ -532,55 +525,17 @@ function groupTicks(d) {
 }
 
 // Returns an event handler for fading a given chord group.
-function fade(opacity) {
+function fade() {
     return function(g, i) {
 
-    if (opacity == 0.05) {
-      svgp.selectAll(".summary")
-          .filter(function(d) { 
-            return d[0][0] != city[i].name;
-          })
-          .style("opacity", 0);
+            chord.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
 
-      svgp.selectAll(".summary")
-          .filter(function(d) { 
-            return d[0][0] == city[i].name;
-          })
-          .style("opacity", 1);
+            chord2.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
 
-      svgp.select(".agg")
-        .style("opacity", 0);
+            summary.classed("unfade", function(d) { return d[0][0] == city[i].name; })
 
-    chord.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
-
-    chord2.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
-
-    }
-    else {
-      svgp.selectAll(".summary")
-          .style("opacity", 0);
-
-      svgp.select(".agg")
-        .style("opacity", 1);
-
-    chord.classed("unfade", function(p) { return p.source.index == i && p.target.index == i; });
-
-    chord2.classed("unfade", function(p) { return p.source.index == i && p.target.index == i; });
-
-    }
-/*
-    svg.selectAll("path.chord")
-        .filter(function(d) { return d.source.index != i && d.target.index != i; })
-        .style("opacity", opacity);
-
-    svg2.selectAll("path.chord")
-        .filter(function(d) { return d.source.index != i && d.target.index != i; })
-        .style("opacity", opacity);
-
-*/
-
+            agg.classed("aggfade", true);
   };
-
 }
 
 
