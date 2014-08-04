@@ -16,6 +16,12 @@
       float: left;
     }
 
+    .underlay{
+      font: 72px sans-serif;
+      font-weight: bold;
+      fill-opacity: .20;
+    }
+
     .circle circle {
       fill: none;
       pointer-events: all;
@@ -70,7 +76,7 @@ var width2 = x - 20,
     innerRadius = Math.min(width, height) * .40 - padding,
     outerRadius = innerRadius + 24;
 
-var sumtop = 240;
+var sumtop = 330;
 var sumtext = 10;
 var sumdy = 15;
 var sumcityleft = sumtext+100;
@@ -115,6 +121,22 @@ var svg2 = svgp
   .append("g")
     .attr("class", "circle")
     .attr("transform", "translate(" + ((width*3)/2 + boxw) + "," + height / 2 + ")");
+
+svg.append("text")
+  .text("negative")
+  .attr({
+    y: -(height / 2)+55,
+    class: "underlay"
+  })
+  .attr("text-anchor", "middle");
+
+svg2.append("text")
+  .text("positive")
+  .attr({
+    y: -(height / 2)+55,
+    class: "underlay"
+  })
+  .attr("text-anchor", "middle");
 
 svg.append("circle")
   .attr("r", outerRadius);
@@ -196,14 +218,6 @@ d3.json("matrix_pos.json", function(matrix_p) {
 
 // info boxx
 
-//title
-
-svgp.append("text")
-  .text("--Title of Chart-")
-  .attr("font-size", 40)
-  .attr("x", 0)
-  .attr("y", 30);
-
 
   //big box
       svgp.append("rect")
@@ -214,16 +228,39 @@ svgp.append("text")
       .attr("fill", "grey")
       .attr("fill-opacity",0.1);
 
+    //title
+    svgp.append("text")
+      .text("--title of chart-")
+      .attr("font-size", 40)
+      .attr("x", 0)
+      .attr("y", 30);
+
+    //text
+      legtext1 = "This visualization depicts the tweets exchanged among the __30__ most populous cities in the US. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
+
+      svgp.append("text")
+      .text(legtext1)
+      .attr("transform", "translate("+sumtext+",0)")
+      .attr("y",50)
+      .call(wrap, boxw-20);
+
+      legtext2 = "The color of each city corresponds to the geographic quadrant it belongs to."
+
+      svgp.append("text")
+      .text(legtext2)
+      .attr("transform", "translate("+sumtext+",0)")
+      .attr("y",120)
+      .call(wrap, boxw-150);
+
     //map png
     svgp.append("svg:image")
        .attr("xlink:href", "USmap.png")
        .attr("width", "120px")
        .attr("height", "80px")
        .attr({
-        x: 10,
-        y: 40
+        x: 170,
+        y: 95
        });
-
 
 //legend diagram
 
@@ -243,16 +280,16 @@ svgp.append("text")
     var chord3 = layout3.matrix(legend_data);
 
     var legend_arc = d3.svg.arc()
-        .innerRadius(50)
-        .outerRadius(60);
+        .innerRadius(40)
+        .outerRadius(50);
 
     var legend_path = d3.svg.chord()
-        .radius(50);
+        .radius(40);
 
     var svg3 = svgp
       .append("g")
       .attr("class", "circle")
-      .attr("transform", "translate(" + (225) + "," + 110 + ")");
+      .attr("transform", "translate(" + 60 + "," + 220 + ")");
 
     var group3 = svg3.selectAll(".group")
       .data(layout3.groups)
@@ -270,16 +307,24 @@ svgp.append("text")
         .attr("class", "chord")
         .style("fill", function(d) { return legend_fill[d.target.index]; })
         .attr("d", legend_path)
-        .style("opacity", 1);
+        .style("opacity", function(d,i) { return i/3;}); //opacity: kill all but 2
 
 // legend text
 
-      legendtext = "Hover over the diagram for more details about each city. You can also zoom.";
+      legtext3 = "The color of each path corresponds to the source city. The more opaque a path is, the stronger the average sentiment of tweets among the cities it links."
 
       svgp.append("text")
-      .text(legendtext)
+      .text(legtext3)
+      .attr("transform", "translate("+120+",0)")
+      .attr("y",190)
+      .call(wrap, boxw-130);
+
+      legtext4 = "Hover over the diagram for more details about each city. You can also zoom.";
+
+      svgp.append("text")
+      .text(legtext4)
       .attr("transform", "translate("+sumtext+",0)")
-      .attr("y",180)
+      .attr("y",290)
       .call(wrap, boxw-20);
 
     //agg text
@@ -310,14 +355,14 @@ svgp.append("text")
     // tweets about city
       summary.append("text")
         .text(function(d){ return "tweets about "+d[0][0]+": "+ d[0][1]+" ("+formatPercent0(d[0][1]/(d[0][1]+d[0][3]))+")"; })
-        .attr({ x: sumtext, y: sumtop + sumdy*3 });
+        .attr({ x: sumtext, y: sumtop + sumdy*3 - 6 });
     // breakdown
       summary.append("rect")
-        .attr({ x: sumtext, y: sumtop + sumdy*3 + 6, height: 12, fill: "red" })
+        .attr({ x: sumtext, y: sumtop + sumdy*3, height: 12, fill: "red" })
         .attr("width", function(d){ return d[0][2]*(boxw-20) - 1; });
 
       summary.append("rect")
-        .attr({ y: sumtop + sumdy*3 + 6, height: 12, fill: "green" })
+        .attr({ y: sumtop + sumdy*3, height: 12, fill: "green" })
         .attr("x", function(d){ return sumtext + d[0][2]*(boxw-20) + 1; })
         .attr("width", function(d){ return (1-d[0][2])*(boxw-20) - 1; });
     // top 5
@@ -343,12 +388,12 @@ svgp.append("text")
     // tweets by city
       summary.append("text")
         .text(function(d){ return "tweets by "+d[0][0]+": "+ d[0][3]+" ("+formatPercent0(d[0][3]/(d[0][1]+d[0][3]))+")"; })
-        .attr({ x: sumtext, y: sumtop + sumdy*12 });
+        .attr({ x: sumtext, y: sumtop + sumdy*12 - 6});
     // breakdown
       summary.append("rect")
-        .attr({ x: sumtext, y: sumtop + sumdy*12 + 6, height: 12, fill: "red" })
+        .attr({ x: sumtext, y: sumtop + sumdy*12, height: 12, fill: "red" })
         .attr("width", function(d){ return d[0][4]*(boxw-20) - 1; });
-      summary.append("rect").attr({ y: sumtop + sumdy*12 + 6, height: 12, fill: "green" })
+      summary.append("rect").attr({ y: sumtop + sumdy*12, height: 12, fill: "green" })
         .attr("x", function(d){ return sumtext + d[0][4]*(boxw-20) + 1; })
         .attr("width", function(d){ return (1-d[0][4])*(boxw-20) - 1; });
     // top 5
