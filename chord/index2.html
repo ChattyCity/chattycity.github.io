@@ -7,7 +7,7 @@
     }
 
     path.chord {
-      fill-opacity: .67;
+      /*fill-opacity: .67;*/
       stroke: #000;
       stroke-width: .1px;
     }
@@ -174,22 +174,22 @@ d3.csv("cities.csv", function(cities){
   //NE is green
   var NE_color = d3.scale.linear()
     .domain([0,NE+1])
-    .range([d3.rgb(0,255,0),d3.rgb(0,64,0)]);
+    .range([d3.rgb(0,165,255),d3.rgb(0,0,124)]);
 
   //SE is blue
   var SE_color = d3.scale.linear()
     .domain([0,SE+1])
-    .range([d3.rgb(0,255,255),d3.rgb(0,0,64)]);
+    .range([d3.rgb(255,155,0),d3.rgb(180,45,0)]);
 
   //SW is red
   var SW_color = d3.scale.linear()
     .domain([0,SW+1])
-    .range([d3.rgb(255,0,0),d3.rgb(64,0,0)]);
+    .range([d3.rgb(255,0,255),d3.rgb(64,0,64)]);
 
   //NW is yellow
   var NW_color = d3.scale.linear()
     .domain([0,NW+1])
-    .range([d3.rgb(255,255,0),d3.rgb(64,64,0)]);
+    .range([d3.rgb(255,255,0),d3.rgb(128,128,0)]);
 
   var fill = [];
   for (var i = 0; i < NE; i++){
@@ -241,7 +241,7 @@ d3.json("matrix_pos.json", function(matrix_p) {
       .attr("y", 30);
 
     //text
-      legtext1 = "This visualization depicts the tweets exchanged among the __30__ most populous cities in the US. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
+      legtext1 = "This visualization depicts the tweets exchanged among the 40 most populous cities in the US. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
 
       svgp.append("text")
       .text(legtext1)
@@ -497,7 +497,7 @@ var coverbox2 = d3.select(".mastersvg")
         .attr("class", "chord")
         .style("fill", function(d) { return fill[d.source.index]; })
         .attr("d", path)
-        .style("opacity", 1);
+        .style("opacity", function (d) { return d3.round(0.35-sent_matrix_neg[d.source.index][d.target.index], 2); });
 
     var chord2 = svg2.selectAll(".chord")
         .data(layout2.chords)
@@ -505,7 +505,7 @@ var coverbox2 = d3.select(".mastersvg")
         .attr("class", "chord")
         .style("fill", function(d) { return fill[d.source.index]; })
         .attr("d", path)
-        .style("opacity", 1);
+        .style("opacity", function (d) { return d3.round(0.35+sent_matrix_pos[d.source.index][d.target.index], 2); });
 
 
     // Add a mouseover title for each chord.
