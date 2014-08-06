@@ -171,17 +171,17 @@ d3.csv("cities.csv", function(cities){
     if (city[i].quad == "NW") NW++;
   };
 
-  //NE is green
+  //NE is blue
   var NE_color = d3.scale.linear()
     .domain([0,NE+1])
     .range([d3.rgb(0,165,255),d3.rgb(0,0,124)]);
 
-  //SE is blue
+  //SE is orange
   var SE_color = d3.scale.linear()
     .domain([0,SE+1])
     .range([d3.rgb(255,155,0),d3.rgb(180,45,0)]);
 
-  //SW is red
+  //SW is purple
   var SW_color = d3.scale.linear()
     .domain([0,SW+1])
     .range([d3.rgb(255,0,255),d3.rgb(64,0,64)]);
@@ -235,10 +235,11 @@ d3.json("matrix_pos.json", function(matrix_p) {
 
     //title
     svgp.append("text")
-      .text("--title of chart-")
-      .attr("font-size", 40)
-      .attr("x", 0)
-      .attr("y", 30);
+      .text("ChattyCity")
+      .attr("font-size", 36)
+      .attr("x", 10)
+      .attr("y", 30)
+      .attr("weight", "bold");
 
     //text
       legtext1 = "This visualization depicts the tweets exchanged among the 40 most populous cities in the US. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
@@ -270,17 +271,20 @@ d3.json("matrix_pos.json", function(matrix_p) {
 //legend diagram
 
     var legend_data = [
-      [ 8010, 16145, 8090, 8045],
-      [ 1951, 10048, 2060, 6171],
-      [11975,  5871, 8916, 2868],
-      [ 1013,   990,  940, 6907]
+      [ 0, 16, 0, 8, 4 ,5],
+      [ 0, 0, 3, 0, 0 ,4],
+      [7,  6, 1, 1, 1 ,5],
+      [ 2, 0, 2, 0, 4 ,5],
+      [12,  6, 0, 2, 0 ,5],
+      [ 1,  1,  9, 0, 5 ,0]
     ];
 
-    var legend_fill = [d3.rgb(0,255,0), d3.rgb(0,100,164), d3.rgb(255,0,0), d3.rgb(255,255,0)];
+    var legend_fill = [d3.rgb(0,0,0), d3.rgb(0,80,190), d3.rgb(240,100,0), d3.rgb(0,0,0),d3.rgb(0,0,0), d3.rgb(176,0,176)];
 
     var layout3 = d3.layout.chord()
         .padding(.05)
         .sortSubgroups(d3.descending);
+        //.sortGroups(d3.descending);
 
     var chord3 = layout3.matrix(legend_data);
 
@@ -296,6 +300,16 @@ d3.json("matrix_pos.json", function(matrix_p) {
       .attr("class", "circle")
       .attr("transform", "translate(" + 60 + "," + 220 + ")");
 
+      svg3.append("circle")
+        .attr("r", 50)
+        .attr("stroke", "black")
+        .attr("opacity", 0.3);
+
+      svg3.append("circle")
+        .attr("r", 40)
+        .attr("stroke", "black")
+        .attr("opacity", 0.3);
+
     var group3 = svg3.selectAll(".group")
       .data(layout3.groups)
       .enter().append("g")
@@ -304,7 +318,8 @@ d3.json("matrix_pos.json", function(matrix_p) {
     var groupPath3 = group3.append("path")
         .attr("id", function(d, i) { return "group" + i; })
         .attr("d", legend_arc)
-        .style("fill", function(d, i) { return legend_fill[i]; });
+        .style("fill", function(d, i) { return legend_fill[i]; })
+        .style("opacity", function(d,i) { var n = 0; if( i == 2 || i == 5 || i == 1) { n = 1; } return n;}); //opacity: kill all but 2
 
     var chord3 = svg3.selectAll(".chord")
         .data(layout3.chords)
@@ -312,7 +327,51 @@ d3.json("matrix_pos.json", function(matrix_p) {
         .attr("class", "chord")
         .style("fill", function(d) { return legend_fill[d.target.index]; })
         .attr("d", legend_path)
-        .style("opacity", function(d,i) { return i/3;}); //opacity: kill all but 2
+        .style("opacity", function(d,i) { var n = 0; if( i == 11 || i == 5) { n = i/22 + 0.2; } return n;});
+
+    var ticks3 = group3.selectAll("g")
+        .data(groupTicksLegend)
+      .enter().append("g")
+        .attr("transform", function(d) {
+          return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+              + "translate(" + 50 + ",0)";
+        });
+
+    ticks3.append("text")
+        .attr("x",5)
+        .attr("dy", ".35em")
+        .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-10)" : null; })
+        .style("text-anchor", "middle")
+        .text(function(d) { return d.label; });
+
+
+    function groupTicksLegend(d) {
+      var legend_ticks = ["","A","B","","","C"]
+      var k = (d.endAngle - d.startAngle) / 2;
+      return d3.range(1).map(function(v, i) {
+        return {
+          angle: k + d.startAngle,
+          label: legend_ticks[d.index]
+        };
+      });
+    }
+
+    svg3.append("text")
+      .text("B→C")
+      .attr({
+        x: -35,
+        y: 6
+      })
+      .style("font-size", 10);
+
+    svg3.append("text")
+      .text("A→B")
+      .attr({
+        x: 11,
+        y: 10
+      })
+      .style("font-size", 10);
+
 
 // legend text
 
@@ -320,16 +379,16 @@ d3.json("matrix_pos.json", function(matrix_p) {
 
       svgp.append("text")
       .text(legtext3)
-      .attr("transform", "translate("+120+",0)")
+      .attr("transform", "translate("+130+",0)")
       .attr("y",190)
-      .call(wrap, boxw-130);
+      .call(wrap, boxw-140);
 
-      legtext4 = "Hover over the diagram for more details about each city. You can also zoom.";
+      legtext4 = "Hover over the diagrams for more details about each city.";
 
       svgp.append("text")
       .text(legtext4)
       .attr("transform", "translate("+sumtext+",0)")
-      .attr("y",290)
+      .attr("y",300)
       .call(wrap, boxw-20);
 
     //agg text
