@@ -29,6 +29,11 @@
 
     .summary {
       visibility: hidden;
+      font: 12px sans-serif;
+    }
+
+    .agg {
+      font: 12px sans-serif;
     }
 
     .extend_arc {
@@ -76,7 +81,7 @@ var width2 = x - 20,
     innerRadius = Math.min(width, height) * .40 - padding,
     outerRadius = innerRadius + 24;
 
-var sumtop = 330;
+var sumtop = 335;
 var sumtext = 10;
 var sumdy = 15;
 var sumcityleft = sumtext+100;
@@ -205,6 +210,8 @@ d3.csv("cities.csv", function(cities){
     fill.push(NW_color(i));
   };
 
+d3.json("aggregate.json", function(aggregate) {
+  aggregate_data = aggregate;
 
 d3.json("summary.json", function(summary) {
   summary_data = summary;
@@ -229,17 +236,25 @@ d3.json("matrix_pos.json", function(matrix_p) {
       .attr("x", 0)
       .attr("y", 0)
       .attr("width", boxw)
-      .attr("height", height)
+      .attr("height", sumtop-25)
       .attr("fill", "grey")
       .attr("fill-opacity",0.1);
 
+ /*     svgp.append("rect")
+      .attr("x", 0)
+      .attr("y", sumtop-15)
+      .attr("width", boxw)
+      .attr("height", height-sumtop+20)
+      .attr("fill", "grey")
+      .attr("fill-opacity",0.1);
+*/
     //title
     svgp.append("text")
       .text("ChattyCity")
       .attr("font-size", 36)
       .attr("x", 10)
       .attr("y", 30)
-      .attr("weight", "bold");
+      .attr("font-weight", "bold");
 
     //text
       legtext1 = "This visualization depicts the tweets exchanged among the 40 most populous cities in the US. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
@@ -365,7 +380,7 @@ d3.json("matrix_pos.json", function(matrix_p) {
       .style("font-size", 10);
 
     svg3.append("text")
-      .text("A→B")
+      .text("B←A")
       .attr({
         x: 11,
         y: 10
@@ -391,14 +406,80 @@ d3.json("matrix_pos.json", function(matrix_p) {
       .attr("y",300)
       .call(wrap, boxw-20);
 
+
+
+
     //agg text
     var agg = d3.select("g.circles").append("g")
       .attr("class","agg")
       .append("g");
 
-      agg.append("text")
-      .text("total volume: xxx tweets")
+/*      agg.append("text")
+      .text("summary statistics")
       .attr({x: sumtext, y: sumtop, class: "header"});
+*/
+      agg.append("text")
+      .text("total tweets collected: "+(aggregate_data[0][0]+aggregate_data[0][1]))
+      .attr({x: sumtext, y: sumtop + sumdy})
+      .attr("font-weight","bold");
+
+      agg.append("text")
+      .text(aggregate_data[0][2]+" - "+aggregate_data[0][3])
+      .attr({x: sumtext, y: sumtop + sumdy*2});
+
+     //overall neg/pos portions 
+      agg.append("rect")
+        .attr({ x: sumtext, y: sumtop + sumdy*3, height: 12, fill: "red" })
+        .attr("width", (aggregate_data[0][0]/(aggregate_data[0][0]+aggregate_data[0][1]))*(boxw-20) - 1);
+
+      agg.append("rect")
+        .attr({ y: sumtop + sumdy*3, height: 12, fill: "green" })
+        .attr("x", sumtext + (aggregate_data[0][0]/(aggregate_data[0][0]+aggregate_data[0][1]))*(boxw-20) + 1)
+        .attr("width", (aggregate_data[0][1]/(aggregate_data[0][0]+aggregate_data[0][1]))*(boxw-20) - 1);      
+
+
+      agg.append("text")
+      .text("top 7 loudest cities:")
+      .attr({x: sumtext, y: sumtop + sumdy*5})
+      .attr("font-weight","bold");
+
+      for(var j = 0; j<7; j++){
+        agg.append("text")
+          .text(aggregate_data[2][j][0])
+          .attr({ x: sumtext + 10, y: sumtop + sumdy*(6+j) });
+
+        agg.append("rect")
+          .attr({ y: sumtop + sumdy*(5+j) + 6, height: 12, fill: "red" })
+          .attr("x", summary_city(aggregate_data[2][0+j][1], aggregate_data[2][0+j][2], aggregate_data[2][7][0])[0])
+          .attr("width", summary_city(aggregate_data[2][0+j][1], aggregate_data[2][0+j][2], aggregate_data[2][7][0])[1]);
+
+        agg.append("rect")
+          .attr({ y: sumtop + sumdy*(5+j) + 6, height: 12, fill: "green" })
+          .attr("x", sumcityleft+sumcitypartwidth+1)
+          .attr("width", summary_city(aggregate_data[2][0+j][1], aggregate_data[2][0+j][2], aggregate_data[2][7][0])[2]);
+       }
+
+      agg.append("text")
+      .text("top 7 most talked about cities:")
+      .attr({x: sumtext, y: sumtop + sumdy*14})
+      .attr("font-weight","bold");
+
+      for(var j = 0; j<7; j++){
+        agg.append("text")
+          .text(aggregate_data[1][j][0])
+          .attr({ x: sumtext + 10, y: sumtop + sumdy*(15+j) });
+
+        agg.append("rect")
+          .attr({ y: sumtop + sumdy*(14+j) + 6, height: 12, fill: "red" })
+          .attr("x", summary_city(aggregate_data[1][0+j][1], aggregate_data[1][0+j][2], aggregate_data[1][7][0])[0])
+          .attr("width", summary_city(aggregate_data[1][0+j][1], aggregate_data[1][0+j][2], aggregate_data[1][7][0])[1]);
+
+        agg.append("rect")
+          .attr({ y: sumtop + sumdy*(14+j) + 6, height: 12, fill: "green" })
+          .attr("x", sumcityleft+sumcitypartwidth+1)
+          .attr("width", summary_city(aggregate_data[1][0+j][1], aggregate_data[1][0+j][2], aggregate_data[1][7][0])[2]);
+       }
+
 
     // summary box
     var summary = d3.select("g.circles").selectAll(".summary")
@@ -410,12 +491,12 @@ d3.json("matrix_pos.json", function(matrix_p) {
     // header
       summary.append("text")
         .text(function(d){ return d[0][0]; })
-        .attr({ x: boxw/2, y: sumtop, class: "header"})
-        .attr("text-anchor","middle");
+        .attr({ x: sumtext, y: sumtop, class: "header"});
     // total volume
       summary.append("text")
         .text(function(d){ return "total volume: "+ (d[0][1]+d[0][3]) + " tweets"; })
-        .attr({ x: sumtext, y: sumtop + sumdy });
+        .attr({ x: sumtext, y: sumtop + sumdy })
+        .attr("font-weight", "bold");
     // tweets about city
       summary.append("text")
         .text(function(d){ return "tweets about "+d[0][0]+": "+ d[0][1]+" ("+formatPercent0(d[0][1]/(d[0][1]+d[0][3]))+")"; })
@@ -432,7 +513,8 @@ d3.json("matrix_pos.json", function(matrix_p) {
     // top 5
       summary.append("text")
         .text("top 5 cities (by volume):")
-        .attr({ x: sumtext, y: sumtop + sumdy*5 });
+        .attr({ x: sumtext, y: sumtop + sumdy*5 })
+        .attr("font-weight","bold");
     // city1
       for(var j = 0; j<5; j++){
         summary.append("text")
@@ -461,7 +543,7 @@ d3.json("matrix_pos.json", function(matrix_p) {
         .attr("x", function(d){ return sumtext + d[0][4]*(boxw-20) + 1; })
         .attr("width", function(d){ return (1-d[0][4])*(boxw-20) - 1; });
     // top 5
-      summary.append("text").text("top 5 cities (by volume):").attr({ x: sumtext, y: sumtop + sumdy*14 });
+      summary.append("text").text("top 5 cities (by volume):").attr({ x: sumtext, y: sumtop + sumdy*14 }).attr("font-weight","bold");
     // cities
       for(var j = 0; j<5; j++){
         summary.append("text")
@@ -656,6 +738,7 @@ function fade() {
 }
 
 
+});
 });
 });
 });

@@ -6,6 +6,7 @@ Created on Tue Jul 15 17:02:56 2014
 """
 import simplejson
 import os
+import time
 
 chatty = "C:/Users/Milad/Documents/code/fun/ChattyCity"
 indir = chatty+"/parsedfiles"
@@ -29,6 +30,12 @@ with open(g, "r") as readfile:
 with open(g,"r") as readfile:
     readfile.readline()
     date1 = readfile.readline().split("\t")[0]
+
+dt = time.strptime(date1, '%a %b %d %H:%M:%S +0000 %Y') # 'Mon Jun 8 10:51:32 +0000 2009'
+date1 = time.strftime('%A, %B %d, %Y',dt) #Monday, Jun 8, 2009
+
+dt = time.strptime(date2, '%a %b %d %H:%M:%S +0000 %Y') # 'Mon Jun 8 10:51:32 +0000 2009'
+date2 = time.strftime('%A, %B %d, %Y',dt) #Monday, Jun 8, 2009
 #date range: date1 to date 2
 
 #build list of cities with only pos or neg sentiments
@@ -101,7 +108,8 @@ for i in cities:
 #schema for each city:        [[city, #total about, %neg, #total by, %neg],
 # --> top 5 talking about      [[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[max vol portion]],
 # --> top 5 tweets by          [[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[city, vol, neg%],[max vol portion]]]
-
+a1, a2 = {}, {}
+a1vals, a2vals = {}, {}
 summary = []
 for i in range(len(cities)):
     #general stats
@@ -114,10 +122,14 @@ for i in range(len(cities)):
     for j in range(len(cities)):
         pos += matrix_pos[j][i]
     l1.append(neg+pos)
+    a1[cities[i]] = neg+pos
+    a1vals[cities[i]] = [a1[cities[i]], float(neg)/float(a1[cities[i]])]
     l1.append(float(neg)/float(neg+pos))
     neg = sum(matrix_neg[i])
     pos = sum(matrix_pos[i])
     l1.append(neg+pos)
+    a2[cities[i]] = neg+pos
+    a2vals[cities[i]] = [a2[cities[i]], float(neg)/float(a2[cities[i]])]
     l1.append(float(neg)/float(neg+pos))
 
     #others talking about city X    
@@ -158,15 +170,38 @@ for i in range(len(cities)):
     
     summary.append([l1,l2,l3])
 
-#print summary
-
 #normalize pos and neg matrices
 total_vol_pos = sum(matrix_pos)
 total_vol_neg = sum(matrix_neg)
 
-total_vol = total_vol_pos + total_vol_neg
-#total volume of tweets in the diagram
+#build aggregate
+agg = []
+agg.append([total_vol_neg, total_vol_pos, date1.lower(), date2.lower()])
 
+agg1 = []
+a1_top5 = sorted(a1, key=a1.__getitem__,reverse = True)[0:7]
+maxvp = 0
+localmax = 0
+for j in a1_top5:
+    agg1.append([j, a1vals[j][0], a1vals[j][1]])
+    localmax = max(a1vals[j][0]*a1vals[j][1], a1vals[j][0]*(1-a1vals[j][1]))
+    maxvp = max(maxvp, localmax)
+agg1.append([maxvp])
+
+maxvp = 0
+localmax = 0
+agg2 = []   
+a2_top5 = sorted(a2, key=a2.__getitem__,reverse = True)[0:7]
+for j in a2_top5:
+    agg2.append([j, a2vals[j][0], a2vals[j][1]])
+    localmax = max(a2vals[j][0]*a2vals[j][1], a2vals[j][0]*(1-a2vals[j][1]))
+    maxvp = max(maxvp, localmax)   
+agg2.append([maxvp])  
+ 
+agg.append(agg1)
+agg.append(agg2)
+
+#set threshold
 for i in range(len(matrix_pos)):
     for j in range(len(matrix_pos[i])):
         matrix_pos[i][j] = float(matrix_pos[i][j])/total_vol_pos if float(matrix_pos[i][j])/total_vol_pos > 0.001 else 0
@@ -206,3 +241,6 @@ with open(os.path.join(outdir, "cities.csv"),"w") as writefile:
 
 with open(os.path.join(outdir, "summary.json"), "w") as writefile:
     simplejson.dump(summary, writefile)
+
+with open(os.path.join(outdir, "aggregate.json"), "w") as writefile:
+    simplejson.dump(agg, writefile)
