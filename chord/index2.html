@@ -89,6 +89,7 @@ var sumcitypartwidth = 90;
 
 var formatPercent0 = d3.format(".0%");
 var formatPercent1 = d3.format(".1%");
+var formatComma = d3.format(",");
 
 var arc = d3.svg.arc()
     .innerRadius(innerRadius)
@@ -390,7 +391,7 @@ d3.json("matrix_pos.json", function(matrix_p) {
 
 // legend text
 
-      legtext3 = "The color of each path corresponds to the source city. The more opaque a path is, the stronger the average sentiment of tweets among the cities it links."
+      legtext3 = "The color of each path corresponds to the city that talks more about the other. The more opaque a path is, the stronger the average sentiment of tweets among the cities it links."
 
       svgp.append("text")
       .text(legtext3)
@@ -419,7 +420,7 @@ d3.json("matrix_pos.json", function(matrix_p) {
       .attr({x: sumtext, y: sumtop, class: "header"});
 */
       agg.append("text")
-      .text("total tweets collected: "+(aggregate_data[0][0]+aggregate_data[0][1]))
+      .text("total tweets collected: "+formatComma(aggregate_data[0][0]+aggregate_data[0][1]))
       .attr({x: sumtext, y: sumtop})
       .attr("font-weight","bold")
       .attr("class", "header");
@@ -498,12 +499,12 @@ d3.json("matrix_pos.json", function(matrix_p) {
         .attr({ x: sumtext, y: sumtop, class: "header"});
     // total volume
       summary.append("text")
-        .text(function(d){ return "total volume: "+ (d[0][1]+d[0][3]) + " tweets"; })
+        .text(function(d){ return "total volume: "+ formatComma(d[0][1]+d[0][3]) + " tweets"; })
         .attr({ x: sumtext, y: sumtop + sumdy })
         .attr("font-weight", "bold");
     // tweets about city
       summary.append("text")
-        .text(function(d){ return "tweets about "+d[0][0]+": "+ d[0][1]+" ("+formatPercent0(d[0][1]/(d[0][1]+d[0][3]))+")"; })
+        .text(function(d){ return "tweets about "+d[0][0]+": "+ formatComma(d[0][1])+" ("+formatPercent0(d[0][1]/(d[0][1]+d[0][3]))+")"; })
         .attr({ x: sumtext, y: sumtop + sumdy*3 - 6 });
     // breakdown
       summary.append("rect")
@@ -537,7 +538,7 @@ d3.json("matrix_pos.json", function(matrix_p) {
        }
     // tweets by city
       summary.append("text")
-        .text(function(d){ return "tweets by "+d[0][0]+": "+ d[0][3]+" ("+formatPercent0(d[0][3]/(d[0][1]+d[0][3]))+")"; })
+        .text(function(d){ return "tweets by "+d[0][0]+": "+ formatComma(d[0][3])+" ("+formatPercent0(d[0][3]/(d[0][1]+d[0][3]))+")"; })
         .attr({ x: sumtext, y: sumtop + sumdy*12 - 6});
     // breakdown
       summary.append("rect")
@@ -566,188 +567,204 @@ d3.json("matrix_pos.json", function(matrix_p) {
       }
 
 
-var coverbox1 = d3.select(".mastersvg")
-  .append("rect")
-  .attr({
-    x: 0, y:0, width: boxw, height: height, opacity: 0
+              var coverbox1 = d3.select(".mastersvg")
+                    .append("rect")
+                    .attr({
+                      x: 0, y:0, width: boxw, height: height, opacity: 0
+                    });
+
+              var coverbox2 = d3.select(".mastersvg")
+                    .append("rect")
+                    .attr({
+                      x: 0, y:0, width: width2, height: 72, opacity: 0
+                    });
+
+
+              // main charts
+
+              var chord = layout.matrix(matrix_neg);
+              var chord2 = layout2.matrix(matrix_pos);
+
+
+              // Add a group per neighborhood.
+              var group = svg.selectAll(".group")
+                    .data(layout.groups)
+                    .enter()
+                    .append("g")
+                    .attr("class", "group")
+                    .on("mouseover", fade(0));
+
+              var group2 = svg2.selectAll(".group")
+                    .data(layout2.groups)
+                    .enter()
+                    .append("g")
+                    .attr("class", "group")
+                    .on("mouseover", fade(1));
+
+
+              // Add a mouseover title.
+              group.append("title").text(function(d, i) {
+                return city[i].name + ": " + formatPercent1(d.value) + " of all negative tweets";
+              });
+
+              group2.append("title").text(function(d, i) {
+                return city[i].name + ": " + formatPercent1(d.value) + " of all positive tweets";
+              });
+
+
+              // Add the group arc.
+              var groupPath = group.append("path")
+                    .attr("id", function(d, i) { return "group" + i; })
+                    .attr("d", arc)
+                    .style("fill", function(d, i) { return fill[i]; });
+
+              var groupPath2 = group2.append("path")
+                    .attr("id", function(d, i) { return "group" + i; })
+                    .attr("d", arc)
+                    .style("fill", function(d, i) { return fill[i]; });
+
+
+              var extend_arc = d3.svg.arc()
+                    .innerRadius(outerRadius)
+                    .outerRadius(outerRadius+50);
+
+
+              //proximity detection for hover
+              var groupPathExtend= group.append("path")
+                    .attr("class", "extend_arc")
+                    .attr("d", extend_arc);
+
+              var groupPath2Extend= group2.append("path")
+                    .attr("class", "extend_arc")
+                    .attr("d", extend_arc);
+
+
+              // Add the chords.
+              var chord = svg.selectAll(".chord")
+                    .data(layout.chords)
+                    .enter()
+                    .append("path")
+                    .attr("class", "chord")
+                    .style("fill", function(d) { return fill[d.source.index]; })
+                    .attr("d", path)
+                    .style("opacity", function (d) { return d3.round(0.35-sent_matrix_neg[d.source.index][d.target.index], 2); });
+
+              var chord2 = svg2.selectAll(".chord")
+                    .data(layout2.chords)
+                    .enter()
+                    .append("path")
+                    .attr("class", "chord")
+                    .style("fill", function(d) { return fill[d.source.index]; })
+                    .attr("d", path)
+                    .style("opacity", function (d) { return d3.round(0.35+sent_matrix_pos[d.source.index][d.target.index], 2); });
+
+
+              // Add a mouseover title for each chord.
+              chord.append("title").text(function(d) {
+                return city[d.source.index].name
+                    + " → " + city[d.target.index].name
+                    + ": " + formatPercent1(d.source.value)
+                    + "\n"
+                    + "avg. sentiment score: " + d3.round(sent_matrix_neg[d.source.index][d.target.index], 2)
+                    + "\n"
+                    + city[d.target.index].name
+                    + " → " + city[d.source.index].name
+                    + ": " + formatPercent1(d.target.value)
+                    + "\n"
+                    + "avg. sentiment score: " + d3.round(sent_matrix_neg[d.target.index][d.source.index], 2);
+              });
+
+              chord2.append("title").text(function(d) {
+                return city[d.source.index].name
+                    + " → " + city[d.target.index].name
+                    + ": " + formatPercent1(d.source.value)
+                    + "\n"
+                    + "avg. sentiment score: " + d3.round(sent_matrix_pos[d.source.index][d.target.index], 2)
+                    + "\n"
+                    + city[d.target.index].name
+                    + " → " + city[d.source.index].name
+                    + ": " + formatPercent1(d.target.value)
+                    + "\n"
+                    + "avg. sentiment score: " + d3.round(sent_matrix_pos[d.target.index][d.source.index], 2);
+              });
+
+              var ticks = group.selectAll("g")
+                    .data(groupTicks)
+                    .enter()
+                    .append("g")
+                    .attr("transform", function(d) {
+                      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+                            + "translate(" + outerRadius + ",0)";
+                      });
+
+              ticks.append("line")
+                .attr("x1", 1)
+                .attr("y1", 0)
+                .attr("x2", 5)
+                .attr("y2", 0)
+                .style("stroke", "#000");
+
+              ticks.append("text")
+                .attr("x", 8)
+                .attr("dy", ".35em")
+                .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
+                .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+                .text(function(d) { return d.label; });
+
+
+              var ticks2 = group2.selectAll("g")
+                    .data(groupTicks)
+                    .enter()
+                    .append("g")
+                    .attr("transform", function(d) {
+                      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+                            + "translate(" + outerRadius + ",0)";
+                      });
+
+              ticks2.append("line")
+                .attr("x1", 1)
+                .attr("y1", 0)
+                .attr("x2", 5)
+                .attr("y2", 0)
+                .style("stroke", "#000");
+
+              ticks2.append("text")
+                .attr("x", 8)
+                .attr("dy", ".35em")
+                .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
+                .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+                .text(function(d) { return d.label; });
+
+
+              // Returns an array of tick angles and labels, given a group.
+              function groupTicks(d) {
+                var k = (d.endAngle - d.startAngle) / 2;
+                return d3.range(1).map(function(v, i) {
+                  return {
+                    angle: k + d.startAngle,
+                    label: city[d.index].name
+                  };
+                });
+              }
+
+
+              // Returns an event handler for fading a given chord group.
+              function fade(negpos) {
+                return function(g, i) {
+                    chord.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
+                    chord2.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
+                    summary.classed("unfade", function(d) { var cityname = (city[i].name+", "+city[i].state); return d[0][0] == cityname; })
+                    agg.classed("aggfade", true);
+                };
+              }
+
+
+            });
+          });
+        });
+      });
+    });
   });
-
-var coverbox2 = d3.select(".mastersvg")
-  .append("rect")
-  .attr({
-    x: 0, y:0, width: width2, height: 72, opacity: 0
-  });
-
-// main charts
-
-    var chord = layout.matrix(matrix_neg);
-    var chord2 = layout2.matrix(matrix_pos);
-
-    // Add a group per neighborhood.
-    var group = svg.selectAll(".group")
-        .data(layout.groups)
-      .enter().append("g")
-        .attr("class", "group")
-        .on("mouseover", fade());
-
-    var group2 = svg2.selectAll(".group")
-        .data(layout2.groups)
-      .enter().append("g")
-        .attr("class", "group")
-        .on("mouseover", fade());
-
-//
-
-
-
-    // Add a mouseover title.
-    group.append("title").text(function(d, i) {
-      return city[i].name + ": " + formatPercent1(d.value) + " of all negative tweets";
-    });
-
-    group2.append("title").text(function(d, i) {
-      return city[i].name + ": " + formatPercent1(d.value) + " of all positive tweets";
-    });
-
-
-    // Add the group arc.
-    var groupPath = group.append("path")
-        .attr("id", function(d, i) { return "group" + i; })
-        .attr("d", arc)
-        .style("fill", function(d, i) { return fill[i]; });
-
-    var groupPath2 = group2.append("path")
-        .attr("id", function(d, i) { return "group" + i; })
-        .attr("d", arc)
-        .style("fill", function(d, i) { return fill[i]; });
-
-
-    var extend_arc = d3.svg.arc()
-        .innerRadius(outerRadius)
-        .outerRadius(outerRadius+50);
-
-//proximity detection for hover
-    var groupPathExtend= group.append("path")
-        .attr("class", "extend_arc")
-        .attr("d", extend_arc);
-
-    var groupPath2Extend= group2.append("path")
-        .attr("class", "extend_arc")
-        .attr("d", extend_arc);
-
-    // Add the chords.
-    var chord = svg.selectAll(".chord")
-        .data(layout.chords)
-      .enter().append("path")
-        .attr("class", "chord")
-        .style("fill", function(d) { return fill[d.target.index]; })
-        .attr("d", path)
-        .style("opacity", function (d) { return d3.round(0.35-sent_matrix_neg[d.source.index][d.target.index], 2); });
-
-    var chord2 = svg2.selectAll(".chord")
-        .data(layout2.chords)
-      .enter().append("path")
-        .attr("class", "chord")
-        .style("fill", function(d) { return fill[d.target.index]; })
-        .attr("d", path)
-        .style("opacity", function (d) { return d3.round(0.35+sent_matrix_pos[d.source.index][d.target.index], 2); });
-
-
-    // Add a mouseover title for each chord.
-    chord.append("title").text(function(d) {
-      return city[d.source.index].name
-          + " → " + city[d.target.index].name
-          + ": " + formatPercent1(d.source.value)
-          + "\n"
-          + "average sentiment score: " + d3.round(sent_matrix_neg[d.source.index][d.target.index], 2);
-    });
-
-    chord2.append("title").text(function(d) {
-      return city[d.source.index].name
-          + " → " + city[d.target.index].name
-          + ": " + formatPercent1(d.source.value)
-          + "\n"
-          + "average sentiment score: " + d3.round(sent_matrix_pos[d.source.index][d.target.index], 2);
-    });
-
-var ticks = group.selectAll("g")
-    .data(groupTicks)
-  .enter().append("g")
-    .attr("transform", function(d) {
-      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-          + "translate(" + outerRadius + ",0)";
-    });
-
-ticks.append("line")
-    .attr("x1", 1)
-    .attr("y1", 0)
-    .attr("x2", 5)
-    .attr("y2", 0)
-    .style("stroke", "#000");
-
-ticks.append("text")
-    .attr("x", 8)
-    .attr("dy", ".35em")
-    .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
-    .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-    .text(function(d) { return d.label; });
-
-
-var ticks2 = group2.selectAll("g")
-    .data(groupTicks)
-  .enter().append("g")
-    .attr("transform", function(d) {
-      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-          + "translate(" + outerRadius + ",0)";
-    });
-
-ticks2.append("line")
-    .attr("x1", 1)
-    .attr("y1", 0)
-    .attr("x2", 5)
-    .attr("y2", 0)
-    .style("stroke", "#000");
-
-ticks2.append("text")
-    .attr("x", 8)
-    .attr("dy", ".35em")
-    .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
-    .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-    .text(function(d) { return d.label; });
-
-
-// Returns an array of tick angles and labels, given a group.
-function groupTicks(d) {
-  var k = (d.endAngle - d.startAngle) / 2;
-  return d3.range(1).map(function(v, i) {
-    return {
-      angle: k + d.startAngle,
-      label: city[d.index].name
-    };
-  });
-}
-
-// Returns an event handler for fading a given chord group.
-function fade() {
-    return function(g, i) {
-
-            chord.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
-
-            chord2.classed("fade", function(p) { return p.source.index != i && p.target.index != i; });
-
-            summary.classed("unfade", function(d) { var cityname = (city[i].name+", "+city[i].state); return d[0][0] == cityname; })
-
-            agg.classed("aggfade", true);
-  };
-}
-
-
-});
-});
-});
-});
-});
-});
 });
 
 function zoom() {

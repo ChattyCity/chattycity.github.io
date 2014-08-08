@@ -11,7 +11,7 @@ import time
 chatty = "C:/Users/Milad/Documents/code/fun/ChattyCity"
 indir = chatty+"/parsedfiles"
 outdir = os.getcwd()
-g = os.path.join(indir, "tweets.Jul12-1801.txt_parsed.txt")
+g = os.path.join(indir, "one.txt")
 
 n = 40
 # number of cities 
@@ -21,20 +21,20 @@ with open(g, "r") as readfile:
     readfile.readline()
     for line in readfile:
         l = line.split("\t")
-        date2 = l[0]
+        date2 = l[2]
         #grab records that have both source and dest cities and non-zero sentiment
-        if l[3] != "None" and l[4] != "None" and float(l[6].rstrip("\n")) != 0:
-                t.append([l[3],l[4],l[6].rstrip("\n")])
+        if l[5] != "None" and l[6] != "None" and float(l[8].rstrip("\n")) != 0:
+                t.append([l[5],l[6],l[8].rstrip("\n")])
 
 
 with open(g,"r") as readfile:
     readfile.readline()
-    date1 = readfile.readline().split("\t")[0]
+    date1 = readfile.readline().split("\t")[2]
 
-dt = time.strptime(date1, '%a %b %d %H:%M:%S +0000 %Y') # 'Mon Jun 8 10:51:32 +0000 2009'
+dt = time.strptime(date1, '%Y-%m-%dT%H:%M:%S.000Z') # 'Mon Jun 8 10:51:32 +0000 2009'
 date1 = time.strftime('%A, %B %d, %Y',dt) #Monday, Jun 8, 2009
 
-dt = time.strptime(date2, '%a %b %d %H:%M:%S +0000 %Y') # 'Mon Jun 8 10:51:32 +0000 2009'
+dt = time.strptime(date2, '%Y-%m-%dT%H:%M:%S.000Z') # 'Mon Jun 8 10:51:32 +0000 2009'
 date2 = time.strftime('%A, %B %d, %Y',dt) #Monday, Jun 8, 2009
 #date range: date1 to date 2
 
@@ -48,7 +48,7 @@ for tup in t:
         break
 
 
-#find 50 cities with most tweets
+#find n cities with most tweets
 count_dict = {}
 for i in cities:
     count = 0
@@ -170,7 +170,6 @@ for i in range(len(cities)):
     
     summary.append([l1,l2,l3])
 
-#normalize pos and neg matrices
 total_vol_pos = sum(matrix_pos)
 total_vol_neg = sum(matrix_neg)
 
@@ -201,6 +200,7 @@ agg2.append([maxvp])
 agg.append(agg1)
 agg.append(agg2)
 
+#normalize pos and neg matrices
 #set threshold
 for i in range(len(matrix_pos)):
     for j in range(len(matrix_pos[i])):

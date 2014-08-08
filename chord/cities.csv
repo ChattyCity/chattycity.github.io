@@ -19,23 +19,23 @@ austin,tx,SE,1
 charlotte,nc,SE,2
 columbia,sc,SE,3
 dallas,tx,SE,4
-houston,tx,SE,5
-jackson,ms,SE,6
-kansas city,ks,SE,7
-memphis,tn,SE,8
-miami,fl,SE,9
-nashville,tn,SE,10
-new orleans,la,SE,11
-san antonio,tx,SE,12
-tampa,fl,SE,13
+fort worth,tx,SE,5
+houston,tx,SE,6
+jackson,ms,SE,7
+kansas city,ks,SE,8
+memphis,tn,SE,9
+miami,fl,SE,10
+nashville,tn,SE,11
+new orleans,la,SE,12
+san antonio,tx,SE,13
+tampa,fl,SE,14
 denver,co,SW,0
 las vegas,nv,SW,1
-long beach,ca,SW,2
-los angeles,ca,SW,3
-oakland,ca,SW,4
-phoenix,az,SW,5
-sacramento,ca,SW,6
-san diego,ca,SW,7
-san francisco,ca,SW,8
+los angeles,ca,SW,2
+oakland,ca,SW,3
+phoenix,az,SW,4
+sacramento,ca,SW,5
+san diego,ca,SW,6
+san francisco,ca,SW,7
 portland,or,NW,0
 seattle,wa,NW,1
