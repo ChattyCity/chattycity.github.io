@@ -61,10 +61,13 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
       snippet += '</span> <a href="#" class="more">more</a>';
     }
     else {
-      snippet += doc.tweet + '<br>Tags: ' + doc.hashtags + '<br>Sentiment: ' + doc.sentiment;
+      snippet += doc.tstamp + '<br>Sentiment: ' + doc.sentiment;
     }
-
-    var output = '<div><h2>' + doc.tstamp + '</h2>';
+    
+	var autolinker = new Autolinker();
+	var linkedTweet = autolinker.link(doc.tweet);
+	
+    var output = '<div><h2>' + linkedTweet + '</h2>';
   //output += '<p id="links_' + doc.id + '" class="links"></p>';
     output += '<p>' + snippet + '</p></div>';
     return output;
