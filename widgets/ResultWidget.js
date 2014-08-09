@@ -64,8 +64,10 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
       snippet += doc.tstamp + '<br>Sentiment: ' + doc.sentiment;
     }
     
-
-    var output = '<div><h2>' + doc.tweet + '</h2>';
+	var autolinker = new Autolinker();
+	var linkedTweet = autolinker.link(doc.tweet);
+	
+    var output = '<div><h2>' + linkedTweet + '</h2>';
   //output += '<p id="links_' + doc.id + '" class="links"></p>';
     output += '<p>' + snippet + '</p></div>';
     return output;
