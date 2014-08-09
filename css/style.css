@@ -101,9 +101,28 @@ a:hover {
   color: #333;
   font-size: 13px;
 }
-#search input {
+
+/*#search input {
   width: 350px;
 }
+*/
+#search {
+    width:90%;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    text-align: center;
+}
+
+input[type=text] {
+	font-size:18px;
+    display: block;
+    margin: auto;
+    width: 90%;
+    border: 4px solid #818181;
+    padding: 5px;
+}
+
+    
 #calendar {
   width: 160px;
 }

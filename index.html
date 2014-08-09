@@ -23,10 +23,15 @@
   <script src="widgets/AutocompleteWidget.js"></script>
 </head>
 <body>
+
+
+      <ul id="search">
+	  	<input type="text" id="query" name="query" autocomplete="off" placeholder="Enter search term">
+      </ul>
+      <!--<span id="search_help">(press ESC to close suggestions)</span>-->
+          
   <div id="wrap">
     <div id="header">
-      <h1>CityChatter</h1>
-      <h2>Explore location based tweets</h2>
     </div>
 
     <div class="right">
@@ -43,22 +48,17 @@
       <h2>Current Selection</h2>
       <ul id="selection"></ul>
 
-      <h2>Search</h2>
-      <span id="search_help">(press ESC to close suggestions)</span>
-      <ul id="search">
-        <input type="text" id="query" name="query" autocomplete="off">
-      </ul>
 
-      <h2>Top Tweets</h2>
-      <div class="tagcloud" id="tweet"></div>
+      <!--<h2>Tweets</h2>
+      <div class="tagcloud" id="tweet"></div>-->
 
-      <h2>Top Hashtags</h2>
+      <h2>Hashtags</h2>
       <div class="tagcloud" id="hashtags"></div>
 
-      <h2>Top Source Cities</h2>
+      <h2>Source Cities</h2>
       <div class="tagcloud" id="src_city"></div>
 
-      <h2>Top Destination Cities</h2>
+      <h2>Destination Cities</h2>
       <div class="tagcloud" id="dest_city"></div>
 
       <div class="clear"></div>
