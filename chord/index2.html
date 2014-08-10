@@ -78,6 +78,7 @@
 <script>
 
 d3.select(window).on("resize", throttle);
+var move = d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom);
 
   var padding = 40;
   var boxw = 300;
@@ -134,7 +135,7 @@ function setup(innerRadius, outerRadius, width, width2, height){
         .attr("height", height)
         .attr("class","mastersvg")
         .append("g")
-        .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+        .call(move)
         .append("g")
         .attr("class","circles");
 
@@ -837,7 +838,29 @@ function redraw() {
 }
 
   function zoom() {
-    svgp.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
+  var t = d3.event.translate;
+  var s = d3.event.scale; 
+  //zscale = s;
+  var h = height/4;
+
+
+  t[0] = Math.min(
+    (width2/height)  * (s - 1), 
+    Math.max( width2 * (1 - s), t[0] )
+  );
+
+  t[1] = Math.min(
+    h * (s - 1), 
+    Math.max(height  * (1 - s) , t[1])
+  );
+
+  move.translate(t);
+  svgp.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+
+
+    //svgp.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   }
 
   function wrap(text, width) {
