@@ -35,7 +35,7 @@ var Manager;
     Manager.addWidget(new AjaxSolr.AutocompleteWidget({
       id: 'text',
       target: '#search',
-      fields: [ 'hashtags', 'src_city', 'dest_city' ]
+      fields: [ 'tweet', 'hashtags', 'src_city', 'dest_city' ]
     }));
     Manager.init();
     Manager.store.addByValue('q', '*:*');
