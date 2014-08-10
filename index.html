@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css">
   <script src="js/ChattyCitySolr.js"></script>
   <script src="js/Autolinker.min.js"></script>
+  <script src="js/Moment.min.js"></script>
   <script src="core/Core.js"></script>
   <script src="core/AbstractManager.js"></script>
   <script src="managers/Manager.jquery.js"></script>
@@ -20,6 +21,7 @@
   <script src="core/AbstractWidget.js"></script>
   <script src="widgets/ResultWidget.js"></script>
   <script src="widgets/jquery/PagerWidget.js"></script>
+  <script src="widgets/CalendarWidget.js"></script>
   <script src="core/AbstractFacetWidget.js"></script>
   <script src="widgets/TagcloudWidget.js"></script>
   <script src="widgets/CurrentSearchWidget.js"></script>
@@ -65,6 +67,8 @@
       <h2>Destination Cities</h2>
       <div class="tagcloud" id="dest_city"></div>
 
+	  <div id="calendar"></div>
+	  
       <div class="clear"></div>
     </div>
     <div class="clear"></div>

@@ -61,7 +61,9 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
       snippet += '</span> <a href="#" class="more">more</a>';
     }
     else {
-      snippet += doc.tstamp + '<br>Sentiment: ' + doc.sentiment;
+      snippet += moment(doc.tstamp).format('MMMM Do YYYY, h:mm:ss a') + '<br>' +
+      doc.src_city + '&#8594;' + doc.dest_city +
+      '<br>Sentiment: ' + doc.sentiment;
     }
     
 	var autolinker = new Autolinker();
