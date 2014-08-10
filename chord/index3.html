@@ -107,9 +107,9 @@ var arc, layout, layout2, path, svgp, svg, svg2;
       formatPercent1 = d3.format(".1%"),
       formatComma = d3.format(",");
 
-setup(innerRadius, outerRadius, width, width2, height);
+setup(innerRadius, outerRadius, width, height);
 
-function setup(innerRadius, outerRadius, width, width2, height){
+function setup(innerRadius, outerRadius, width, height){
 
   arc = d3.svg.arc()
       .innerRadius(innerRadius)
@@ -203,7 +203,7 @@ function setup(innerRadius, outerRadius, width, width2, height){
               d3.json("sent_matrix_neg.json", function(sent_matrix_n) {
                 sent_matrix_neg = sent_matrix_n;
 
-                draw(innerRadius, outerRadius);
+                draw();
 
               });
             });
@@ -215,7 +215,7 @@ function setup(innerRadius, outerRadius, width, width2, height){
 
 
 
-  function draw(innerRadius, outerRadius){
+  function draw(){
 
     var NE = 0,
         SE = 0,
@@ -639,6 +639,19 @@ function setup(innerRadius, outerRadius, width, width2, height){
                           .attr("class", "group")
                           .on("mouseover", fade());
 
+  /*
+                    // Add a mouseover title.
+                    group.append("title")
+                      .text(function(d, i) {
+                        return city[i].name + ": " + formatPercent1(d.value) + " of all negative tweets";
+                      });
+
+                    group2.append("title")
+                      .text(function(d, i) {
+                        return city[i].name + ": " + formatPercent1(d.value) + " of all positive tweets";
+                      });
+
+  */
                     // Add the group arc.
                     var groupPath = group.append("path")
                           .attr("id", function(d, i) { return "group" + i; })
@@ -654,6 +667,7 @@ function setup(innerRadius, outerRadius, width, width2, height){
                     var extend_arc = d3.svg.arc()
                           .innerRadius(outerRadius)
                           .outerRadius(outerRadius + 50);
+
 
                     //proximity detection for hover
                     var groupPathExtend= group.append("path")
@@ -683,6 +697,39 @@ function setup(innerRadius, outerRadius, width, width2, height){
                           .style("fill", function(d) { return fill[d.source.index]; })
                           .attr("d", path)
                           .style("opacity", function (d) { return d3.round(0.35+sent_matrix_pos[d.source.index][d.target.index], 2); });
+
+  /*
+                    // Add a mouseover title for each chord.
+                    chord.append("title").text(function(d) {
+                      return city[d.source.index].name
+                          + " → " + city[d.target.index].name
+                          + ": " + formatPercent1(d.source.value)
+                          + "\n"
+                          + "avg. sentiment score: " + d3.round(sent_matrix_neg[d.source.index][d.target.index], 2)
+                          + "\n"
+                          + city[d.target.index].name
+                          + " → " + city[d.source.index].name
+                          + ": " + formatPercent1(d.target.value)
+                          + "\n"
+                          + "avg. sentiment score: " + d3.round(sent_matrix_neg[d.target.index][d.source.index], 2);
+                    });
+
+
+                    chord2.append("title").text(function(d) {
+                      return city[d.source.index].name
+                          + " → " + city[d.target.index].name
+                          + ": " + formatPercent1(d.source.value)
+                          + "\n"
+                          + "avg. sentiment score: " + d3.round(sent_matrix_pos[d.source.index][d.target.index], 2)
+                          + "\n"
+                          + city[d.target.index].name
+                          + " → " + city[d.source.index].name
+                          + ": " + formatPercent1(d.target.value)
+                          + "\n"
+                          + "avg. sentiment score: " + d3.round(sent_matrix_pos[d.target.index][d.source.index], 2);
+                    });
+*/
+
 
                     chord.on("mouseover", function (d) {
                     d3.select("#tooltip")
@@ -832,8 +879,8 @@ function redraw() {
 
   d3.select('#viz').remove();
 
-  setup(innerRadius, outerRadius, width, width2, height);
-  draw(innerRadius, outerRadius);
+  setup(innerRadius, outerRadius, width, height);
+  draw();
 }
 
   function zoom() {
