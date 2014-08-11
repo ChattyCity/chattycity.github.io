@@ -307,7 +307,7 @@
     svgp.append("text")
       .text(legtext1)
       .attr("transform", "translate("+sumtext+",0)")
-      .attr("y",15)
+      .attr("y",50)
       .call(wrap, boxw-20);
 
     legtext2 = "The color of each city corresponds to the geographic quadrant it belongs to."
@@ -315,7 +315,7 @@
     svgp.append("text")
       .text(legtext2)
       .attr("transform", "translate("+sumtext+",0)")
-      .attr("y",85)
+      .attr("y",120)
       .call(wrap, boxw-150);
 
     //map png
@@ -325,7 +325,7 @@
       .attr("height", "80px")
       .attr({
         x: 170,
-        y: 60
+        y: 95
       });
 
     //legend diagram
@@ -358,7 +358,7 @@
     var svg3 = svgp
           .append("g")
           .attr("class", "circle")
-          .attr("transform", "translate(" + 60 + "," + 185 + ")");
+          .attr("transform", "translate(" + 60 + "," + 220 + ")");
 
     svg3.append("circle")
       .attr("r", 50)
@@ -435,31 +435,22 @@
 
       // legend text
 
-      legtext3 = "The color of each path corresponds to the city with more tweets about the other. The more opaque a path is, the stronger the average sentiment of tweets between the cities."
+      legtext3 = "The color of each path corresponds to the source city. The more opaque a path is, the stronger the average sentiment of tweets among the cities it links."
 
       svgp.append("text")
         .text(legtext3)
         .attr("transform", "translate("+130+",0)")
-        .attr("y",155)
+        .attr("y",190)
         .call(wrap, boxw-140);
 
-      /*
       legtext4 = "Hover over the diagrams for more details about each city.";
 
       svgp.append("text")
         .text(legtext4)
         .attr("transform", "translate("+sumtext+",0)")
-        .attr("y",265)
+        .attr("y",300)
         .call(wrap, boxw-20);
-      */
 
-      legtext4 = "Clicking this button will toggle the color of paths to represent the city with the stronger sentiment.";
-
-      svgp.append("text")
-        .text(legtext4)
-        .attr("transform", "translate("+sumtext+",0)")
-        .attr("y",265)
-        .call(wrap, boxw-160);
 
       //agg text
       var agg = d3.select("g.circles").append("g")
@@ -641,41 +632,7 @@
             .append("rect")
             .attr({
               x: 0, y:0, width: width2, height: 72, opacity: 0
-            });
-
-      //toggle button
-      var button = d3.select(".mastersvg")
-            .append("rect")
-            .attr({
-              x: 160, y: 260, width: 130, height: 40, opacity: 0.5
-            })
-            .attr("fill", function(){
-              if (tog == 0) { return "black"; } else { return "white"; }
-            });
-
-      var buttontext = d3.select(".mastersvg")
-            .append("text")
-            .text(function(){
-              if (tog == 0) { return "volume"; } else { return "sentiment"; }
-            })
-            .attr({
-              x: 225,
-              y: 285,
-              opacity: 0.8
-            })
-            .attr("text-anchor", "middle")
-            .attr("font-weight", "bold")
-            .attr("font-size", 16)
-            .attr("fill", function(){
-              if (tog == 0) { return "white"; } else { return "black"; }
-            });
-
-      var buttoncover = d3.select(".mastersvg")
-            .append("rect")
-            .attr({
-              x: 160, y: 260, width: 130, height: 40, opacity: 0
-            })
-            .on("click", toggle);
+            }).on("click", toggle);
 
 
       // main charts
@@ -1006,6 +963,7 @@
 
   function toggle() {
     if (tog == 0) { tog = 1;} else {tog = 0;}
+    console.log(tog);
     redraw();
   }
 
