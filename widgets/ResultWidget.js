@@ -55,25 +55,44 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
 
   template: function (doc) {
     var snippet = '';
+    
     if (doc.tweet.length > 300) {
       snippet += doc.tweet.substring(0, 300);
       snippet += '<span style="display:none;">' + doc.tweet.substring(300);
       snippet += '</span> <a href="#" class="more">more</a>';
     }
     else {
-      snippet += moment(doc.tstamp).format('MMMM Do YYYY, h:mm:ss a') + '<br>' +
-      doc.src_city + '&#8594;' + doc.dest_city +
-      '<br>Sentiment: ' + doc.sentiment;
+      snippet += 'Date:&nbsp;' + moment(doc.tstamp).format('MMMM Do YYYY, h:mm:ss a') + 
+      '<br>City:&nbsp;' + doc.src_city + ' &#8594; ' + doc.dest_city + 
+      '<br>Sentiment:&nbsp;' + doc.sentiment;
     }
-    
+
 	var autolinker = new Autolinker();
 	var linkedTweet = autolinker.link(doc.tweet);
+
+//	var test = '<div title="' + snippet + '" class="tooltip"><span title=""><h2>' + doc.tweet + '</h2></span></div>'
+	//var linkedTest = autolinker.link(test);
+	//var output = test;
+
+	//var output = '<a href="#" title="' + snippet + '" class="tooltip"><span><h2>' + linkedTweet + '</h2></span></a>'
 	
-    var output = '<div><h2>' + linkedTweet + '</h2>';
+    var output = '<span class="trigger-element" data-tipped-options="position: \'left\', size: \'large\'" data-content="'+snippet+'"><h2>' + linkedTweet + '</h2></span>';
   //output += '<p id="links_' + doc.id + '" class="links"></p>';
-    output += '<p>' + snippet + '</p></div>';
+   // output += '<p>' + snippet + '</p></div>';
+  $(document).ready(function() {
+    Tipped.create('.trigger-element', function() {
+      return {
+        content: $(this).data('content')
+      };
+    }, {
+      skin: 'light'
+    });
+  });
+  
     return output;
   },
+
+
 
   init: function () {
     $(document).on('click', 'a.more', function () {
