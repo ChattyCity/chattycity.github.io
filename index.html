@@ -4,15 +4,19 @@
   <meta charset="UTF-8">
   <title>CityChatter</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/opentip.css">
   <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700' rel='stylesheet' type='text/css'>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css">
   <script src="js/ChattyCitySolr.js"></script>
   <script src="js/Autolinker.min.js"></script>
   <script src="js/Moment.min.js"></script>
+  <script src="js/tipped.js"></script>
+  <script src="js/imagesloaded.pkgd.min.js"></script>
+  <link rel="stylesheet" href="css/tipped.css"/>
   <script src="core/Core.js"></script>
   <script src="core/AbstractManager.js"></script>
   <script src="managers/Manager.jquery.js"></script>
@@ -27,10 +31,11 @@
   <script src="widgets/CurrentSearchWidget.js"></script>
   <script src="core/AbstractTextWidget.js"></script>
   <script src="widgets/AutocompleteWidget.js"></script>
+  
 </head>
 <body>
 
-
+    </div>
       <ul id="search">
 	  	<input type="text" id="query" name="query" autocomplete="off" placeholder="Enter search term">
       </ul>
@@ -67,6 +72,10 @@
       <h2>Destination Cities</h2>
       <div class="tagcloud" id="dest_city"></div>
 
+<span id='element-dynamic'>Dynamic</span> 
+
+<span id='element-inline'>Inline</span> 
+<div class='move-into-tooltip' style='display:none'>Moved into the tooltip</div>
 	  <div id="calendar"></div>
 	  
       <div class="clear"></div>
