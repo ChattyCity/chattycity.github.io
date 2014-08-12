@@ -1,82 +1,348 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>CityChatter</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/opentip.css">
-  <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700' rel='stylesheet' type='text/css'>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css">
-  <script src="js/ChattyCitySolr.js"></script>
-  <script src="js/Autolinker.min.js"></script>
-  <script src="js/Moment.min.js"></script>
-  <script src="js/tipped.js"></script>
-  <script src="js/imagesloaded.pkgd.min.js"></script>
-  <link rel="stylesheet" href="css/tipped.css"/>
-  <script src="core/Core.js"></script>
-  <script src="core/AbstractManager.js"></script>
-  <script src="managers/Manager.jquery.js"></script>
-  <script src="core/Parameter.js"></script>
-  <script src="core/ParameterStore.js"></script>
-  <script src="core/AbstractWidget.js"></script>
-  <script src="widgets/ResultWidget.js"></script>
-  <script src="widgets/jquery/PagerWidget.js"></script>
-  <script src="widgets/CalendarWidget.js"></script>
-  <script src="core/AbstractFacetWidget.js"></script>
-  <script src="widgets/TagcloudWidget.js"></script>
-  <script src="widgets/CurrentSearchWidget.js"></script>
-  <script src="core/AbstractTextWidget.js"></script>
-  <script src="widgets/AutocompleteWidget.js"></script>
-  
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ChattyCity</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/agency.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<!-- 
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+ -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-<body>
 
-    </div>
-      <ul id="search">
-	  	<input type="text" id="query" name="query" autocomplete="off" placeholder="Enter search term">
-      </ul>
-      <!--<span id="search_help">(press ESC to close suggestions)</span>-->
-          
-  <div id="wrap">
-    <div id="header">
-    </div>
+<body id="page-top" class="index">
 
-    <div class="right">
-      <div id="result">
-        <div id="navigation">
-          <ul id="pager"></ul>
-          <div id="pager-header"></div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">ChattyCity</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#learn">Learn</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#explore">Explore</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#search">Search</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">Team</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <div id="docs"></div>
-      </div>
-    </div>
+        <!-- /.container-fluid -->
+    </nav>
 
-    <div class="left">
-      <h2>Current Selection</h2>
-      <ul id="selection"></ul>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+            <div class="intro-heading"><span color="#333">Chatty</span>City</div>
+                <div class="intro-lead-in">Learn about, explore, and search tweets in relation to US cities</div>        
+                <a href="#about" class="page-scroll btn btn-xl">Start Learning</a>
+            </div>
+        </div>
+    </header>
+    
+    
+    <!-- About Section -->
+    <section id="about" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">About This Project</h2>
+                    <h3 class="section-subheading text-muted">Storing, retrieving, visualizing, and communicating data.</h3>
+                </div>
+            </div>
+            
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-lightbulb-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Project Concept</h4>
+                    <p class="text-muted">With a list of 100 major US cities, look at what cities talk about each other (including themselves) and whether it is positive or negative. We could also look at whether the sentiment changes based on day of week, time of day, weather, sports, or major events.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Project Goals</h4>
+                    <p class="text-muted">To show an overview of interesting findings from our exploration of the data and to allow the user to explore the data in detail to their own liking by filtering by city (or state or region perhaps), type of weather, positive or negative sentiment, etc.</p><br /><br />
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Data Source</h4>
+                    <p class="text-muted">Twitter streaming API. Sample of tweets from July 7, 2014 through August ?, 2014.</p>
+                </div>
+            </div>
+            
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-database fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Storage & Retrieval</h4>
+                    <p class="text-muted">Amazon Web Services. Apache Solr.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-bar-chart-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Visualization Tools</h4>
+                    <p class="text-muted">Tableau. d3.js.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-warning fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Known Limitations</h4>
+                    <p class="text-muted">We don't have access to all tweets in a given time period, only a limited sample. All tweets don't have a geolocation, nor do all users have a location designated. Limited to the top 100 US cities. Sentiment analysis isn't perfect.</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+        
+        
+
+    
+    <!-- Learn Section -->
+    <section id="learn">
+        <div class="container">
+        <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">What We've Learned</h2>
+                    <h3 class="section-subheading text-muted">A guided tour of interesting findings from location-based tweets.</h3>
+                </div>
+            </div>
+        <!-- 
+<div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+            <!~~ <div class="col-lg-8 col-lg-offset-2 text-center"> ~~>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p><br /><br />
+            </div>
+ -->
+            
+            
+            <!-- <div style="width: 100%; overflow: hidden;"> -->
+    			<!-- <div style="width: 600px; float: left;"> -->
+    			<div class="container">
+    			<div class="row">
+                <div class="col-lg-12 text-center">
+    				<!-- <script type='text/javascript' src='https://public.tableausoftware.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 654px; height: 683px;'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Te&#47;Test_724&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='654' height='683' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableausoftware.com%2F' /> <param name='site_root' value='' /><param name='name' value='Test_724&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Te&#47;Test_724&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /></object></div><div style='width:654px;height:22px;padding:0px 10px 0px 0px;color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;'><div style='margin:0 auto'><a href='http://www.tableausoftware.com/public/about-tableau-products?ref=https://public.tableausoftware.com/views/Test_724/Dashboard1' target='_blank'>Learn About Tableau</a></div></div> -->
+    				
+    				
+<!-- <script type='text/javascript' src='https://public.tableausoftware.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 804px; height: 769px;'><noscript><a href='#'><img alt='Story Title ' src='https:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Bo&#47;Book2_7025&#47;Story1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='804' height='769' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableausoftware.com%2F' /> <param name='site_root' value='' /><param name='name' value='Book2_7025&#47;Story1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Bo&#47;Book2_7025&#47;Story1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div><div style='width:804px;height:22px;padding:0px 10px 0px 0px;color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;'><div style='float:right; padding-right:8px;'><a href='http://www.tableausoftware.com/public/about-tableau-products?ref=https://public.tableausoftware.com/views/Book2_7025/Story1' target='_blank'>Learn About Tableau</a></div></div> -->
 
 
-      <!--<h2>Tweets</h2>
-      <div class="tagcloud" id="tweet"></div>-->
+<!-- <script type='text/javascript' src='https://online.tableausoftware.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1440px; height: 716px;'><object class='tableauViz' width='1440' height='716' style='display:none;'><param name='host_url' value='https%3A%2F%2Fonline.tableausoftware.com%2F' /> <param name='site_root' value='&#47;t&#47;chattycity' /><param name='name' value='Book2&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /></object></div> -->
 
-      <h2>Hashtags</h2>
-      <div class="tagcloud" id="hashtags"></div>
+<script type='text/javascript' src='https://online.tableausoftware.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 699px; height: 549px;'><object class='tableauViz' width='699' height='549' style='display:none;'><param name='host_url' value='https%3A%2F%2Fonline.tableausoftware.com%2F' /> <param name='site_root' value='&#47;t&#47;chattycity' /><param name='name' value='Book22&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /></object></div>
+    				
+    			</div>
+    			<!-- 
+<div style="margin-left: 620px;">
+    				<div class="col-lg-8 col-lg-offset-2">
+            			<p2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.<p>
+            		</div> 
+            	</div>
+ -->
+			</div>
+            </div>
+        </div>
+    </section>
 
-      <h2>Source Cities</h2>
-      <div class="tagcloud" id="src_city"></div>
 
-      <h2>Destination Cities</h2>
-      <div class="tagcloud" id="dest_city"></div>
+<!-- ======================================== -->
 
-	  <div id="calendar"></div>
-	  
-      <div class="clear"></div>
-    </div>
-    <div class="clear"></div>
-  </div>
+
+<!-- Explore Section -->
+    <section class="bg-light-gray">
+        <div class="container2">
+        <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Explore the Data</h2>
+                    <h3 class="section-subheading text-muted">Try out the interactive visualization below to explore tweet sentiment among US cities.</h3>
+                </div>
+        </div>
+        <!-- 
+<div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+            <!~~ <div class="col-lg-8 col-lg-offset-2 text-center"> ~~>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p><br /><br />
+            </div>
+ -->
+    	</div>
+    	<p id="explore"></p>
+<iframe src="http://dmilad.github.io/chord/index2.html" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
+</div>
+</div>
+</section>
+
+<!-- Search Section -->
+    <section id="search">
+        <div class="container">
+        <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Search The Tweets</h2>
+                    <h3 class="section-subheading text-muted">Use the search box below to find tweets with a specific location or hashtag.</h3>
+                </div>
+        </div>
+        <!-- 
+<div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+            <!~~ <div class="col-lg-8 col-lg-offset-2 text-center"> ~~>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p><br /><br />
+            </div>
+    	</div>
+ -->
+<iframe src="http://dmilad.github.io/" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+
+
+</div>
+</section>
+<!-- ======================================== -->
+
+
+    <!-- Team Section -->
+    <section id="team" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Our Amazing Team</h2><br /><br />
+                    <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/3.png" class="img-responsive img-circle" alt="">
+                        <h4>Kelsey Clubb</h4><br />
+                        <p class="text-muted">Data Science graduate student at UC Berkeley and Astronomy Research Associate at UC Berkeley.</p><br />
+                        <ul class="list-inline social-buttons">
+                            <li><a href="http://linkedin.com/in/kelseyclubb"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                            <li><a href="http://twitter.com/Kelsey_clubb"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="mailto:kclubb@ischool.berkeley.edu"><i class="fa fa-envelope"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
+                        <h4>Milad Davaloo</h4><br />
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultricies nulla non metus pulvinar imperdiet. Praesent non adipiscing libero.</p><br />
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-github"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-envelope"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/1.jpeg" class="img-responsive img-circle" alt="">
+                        <h4>Danny Wudka</h4><br />
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultricies nulla non metus pulvinar imperdiet. Praesent non adipiscing libero.</p><br />
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-github"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-envelope"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <!-- 
+<script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+ -->
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/agency.js"></script>
+
 </body>
+
 </html>
