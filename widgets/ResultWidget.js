@@ -76,7 +76,7 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
 
 	//var output = '<a href="#" title="' + snippet + '" class="tooltip"><span><h2>' + linkedTweet + '</h2></span></a>'
 	
-    var output = '<span class="trigger-element" data-tipped-options="position: \'left\', size: \'large\'" data-content="'+snippet+'"><h2>' + linkedTweet + '</h2></span>';
+    var output = '<h2><span class="trigger-element" data-content="'+snippet+'">' + linkedTweet + '</span></h2>';
   //output += '<p id="links_' + doc.id + '" class="links"></p>';
    // output += '<p>' + snippet + '</p></div>';
   $(document).ready(function() {
@@ -85,7 +85,9 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
         content: $(this).data('content')
       };
     }, {
-      skin: 'light'
+      skin: 'light',
+      position: 'left',
+      size: 'large'
     });
   });
   
