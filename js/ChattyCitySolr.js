@@ -4,7 +4,7 @@ var Manager;
 
   $(function () {
     Manager = new AjaxSolr.Manager({
-      solrUrl: 'http://54.209.131.127:8983/solr/collection1/'
+      solrUrl: 'http://54.164.33.84:8983/solr/collection1/'
     });
     Manager.addWidget(new AjaxSolr.ResultWidget({
       id: 'result',
