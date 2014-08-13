@@ -42,8 +42,8 @@ var Manager;
     var params = {
       facet: true,
       'facet.field': [ 'tweet', 'hashtags', 'src_city', 'dest_city' ],
-      'facet.limit': 20,
-      'facet.mincount': 1,
+      'facet.limit': 35,
+      'facet.mincount': 5,
       'f.topics.facet.limit': 50,
       'json.nl': 'map'
     };
