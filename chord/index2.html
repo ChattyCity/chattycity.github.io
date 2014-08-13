@@ -302,7 +302,7 @@
     */
 
     //text
-    legtext1 = "This visualization depicts the tweets exchanged among the 40 most populous cities in the US. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
+    legtext1 = "This visualization depicts the tweets exchanged among the top 40 cities in the US by volume of tweets. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
 
     svgp.append("text")
       .text(legtext1)
@@ -435,7 +435,7 @@
 
       // legend text
 
-      legtext3 = "The color of each path corresponds to the city with more tweets about the other. The more opaque a path is, the stronger the average sentiment of tweets between the cities."
+      legtext3 = "By default, the color of each path corresponds to the city with more tweets about the other. Clicking the button below will toggle the color of paths to represent the city with the stronger sentiment."
 
       svgp.append("text")
         .text(legtext3)
@@ -453,7 +453,7 @@
         .call(wrap, boxw-20);
       */
 
-      legtext4 = "Clicking this button will toggle the color of paths to represent the city with the stronger sentiment.";
+      legtext4 = "The more opaque a path is, the stronger the average sentiment of tweets between the cities.";
 
       svgp.append("text")
         .text(legtext4)

@@ -13,7 +13,7 @@
     <title>ChattyCity</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/agency.css" rel="stylesheet">
@@ -100,11 +100,11 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">About This Project</h2>
-                    <h3 class="section-subheading text-muted">Storing, retrieving, visualizing, and communicating data.</h3>
+                    <h3 class="section-subheading text-muted">Storing, retrieving, visualizing, and communicating data.<br /><br /></h3>
                 </div>
             </div>
             
-            <div class="row text-center">
+            <!--<div class="row text-center">
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
@@ -120,6 +120,28 @@
                     </span>
                     <h4 class="service-heading">Project Goals</h4>
                     <p class="text-muted">To show an overview of interesting findings from our exploration of the data and to allow the user to explore the data in detail to their own liking by filtering by city (or state or region perhaps), type of weather, positive or negative sentiment, etc.</p><br /><br />
+                </div>-
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-lightbulb-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Project Concept</h4>
+                    <p class="text-muted">We recorded what 100 major US cities said about each other over a span of 3 weeks on Twitter. Below you can find an overview of interesting findings from our exploration of this data.</p>
+                </div>
+            </div>-->
+            
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-lightbulb-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Project Concept</h4>
+                    <p class="text-muted">We recorded what 100 major US cities said about each other over a span of 3 weeks on Twitter. This project is an overview of interesting findings from our exploration of this data.</p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
@@ -127,37 +149,22 @@
                         <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
                     </span>
                     <h4 class="service-heading">Data Source</h4>
-                    <p class="text-muted">Twitter streaming API. Sample of tweets from July 7, 2014 through August ?, 2014.</p>
-                </div>
-            </div>
-            
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-database fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Storage & Retrieval</h4>
-                    <p class="text-muted">Amazon Web Services. Apache Solr.</p>
+                    <p class="text-muted">Twitter streaming API<br />July 7, 2014 through July 27, 2014<br />~15 million tweets (50GB of data)</p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
                         <i class="fa fa-bar-chart-o fa-stack-1x fa-inverse"></i>
                     </span>
-                    <h4 class="service-heading">Visualization Tools</h4>
-                    <p class="text-muted">Tableau. d3.js.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-warning fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Known Limitations</h4>
-                    <p class="text-muted">We don't have access to all tweets in a given time period, only a limited sample. All tweets don't have a geolocation, nor do all users have a location designated. Limited to the top 100 US cities. Sentiment analysis isn't perfect.</p>
+                    <h4 class="service-heading">Tools</h4>
+                    <p class="text-muted">Visualization: Tableau, d3.js<br />Storage and Retrieval: AWS, Apache Solr<br />Data Gathering and Cleansing: Python</p>
                 </div>
             </div>
-            
+            <div class="row text-center">
+                <br />
+                <p class="text-muted"><br />For a more detailed description of the project, the tools used, and the source code, please visit our <a href="http://github.com/dmilad/ChattyCity">Github</a> page.</p>
+                <br />
+            </div>
         </div>
     </section>
         
@@ -171,23 +178,18 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">What We've Learned</h2>
-                    <h3 class="section-subheading text-muted">A guided tour of interesting findings from location-based tweets.</h3>
+                    <h3 class="section-subheading text-muted">A guided tour of interesting findings.</h3>
                 </div>
             </div>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
 
-                        <script type='text/javascript' src='https://public.tableausoftware.com/javascripts/api/viz_v1.js'>
-                        </script>
-                        <div class='tableauPlaceholder' style='width: 1020px; height: 1034px;'><noscript><a href='#'><img alt='Story Title ' src='https:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Ch&#47;ChattyCity&#47;Story1&#47;1_rss.png' style='border: none' /></a></noscript>
+                        <div class='tableauPlaceholder' style='width: 1020px; height: 1034px; margin-left: auto; margin-right: auto;'><noscript><a href='#'><img alt='Story Title ' src='https:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Ch&#47;ChattyCity&#47;Story1&#47;1_rss.png' style='border: none' /></a></noscript>
                             <object class='tableauViz' width='1020' height='1034' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableausoftware.com%2F' /> <param name='site_root' value='' /><param name='name' value='ChattyCity&#47;Story1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Ch&#47;ChattyCity&#47;Story1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' />
                             </object>
                         </div>
-                        <div style='width:1020px;height:22px;padding:0px 10px 0px 0px;color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;'>
-                            <div style='float:right; padding-right:8px;'><a href='http://www.tableausoftware.com/public/about-tableau-products?ref=https://public.tableausoftware.com/views/ChattyCity/Story1' target='_blank'>Learn About Tableau</a>
-                            </div>
-                        </div>
+
                     
                     </div>
                 </div>
@@ -202,7 +204,7 @@
 
 
 <!-- Explore Section -->
-    <section class="bg-light-gray">
+    <section class="bg-light-gray" id="explore">
         <div class="container2">
         <div class="row">
                 <div class="col-lg-12 text-center">
@@ -210,18 +212,8 @@
                     <h3 class="section-subheading text-muted">Try out the interactive visualization below to explore tweet sentiment among US cities.</h3>
                 </div>
         </div>
-        <!-- 
-<div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-            <!~~ <div class="col-lg-8 col-lg-offset-2 text-center"> ~~>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p><br /><br />
-            </div>
- -->
     	</div>
-    	<p id="explore"></p>
 <iframe src="http://dmilad.github.io/chord/index2.html" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
-</div>
-</div>
 </section>
 
 <!-- Search Section -->
@@ -233,14 +225,6 @@
                     <h3 class="section-subheading text-muted">Use the search box below to find tweets with a specific location or hashtag.</h3>
                 </div>
         </div>
-        <!-- 
-<div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-            <!~~ <div class="col-lg-8 col-lg-offset-2 text-center"> ~~>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p><br /><br />
-            </div>
-    	</div>
- -->
 <iframe src="http://dmilad.github.io/search.html" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
 
 
@@ -307,10 +291,13 @@
                     </div>
                 </div>
             </div>
+            <div class="row text-center">
+                <br />
+                <p class="text-muted"><br />Project for <a href="http://www.ischool.berkeley.edu/courses/datasci205">Data Science W205</a> and <a href="http://www.ischool.berkeley.edu/courses/datasci209">Data Science W209</a>, Summer 2014, <a href="http://www.ischool.berkeley.edu/">UC Berkeley School of Information</a></p>
+                <br />
+            </div>
         </div>
     </section>
-
-
 
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
@@ -331,6 +318,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/agency.js"></script>
+
+    <!-- -->
+    <script type='text/javascript' src='https://public.tableausoftware.com/javascripts/api/viz_v1.js'></script>
 
 </body>
 
