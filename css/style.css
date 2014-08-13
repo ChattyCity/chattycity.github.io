@@ -177,6 +177,12 @@ font-size: 170%;
 a.tagcloud_size_10 {
 font-size: 180%;
 }
+
+#search .container {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
 /*
 .tooltip{
 	display: inline;
