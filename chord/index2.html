@@ -304,7 +304,7 @@
     */
 
     //text
-    legtext1 = "This visualization depicts the tweets exchanged among the top 40 cities in the US by volume of tweets. The diagram on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
+    legtext1 = "This visualization depicts the tweets exchanged among the top 40 cities in the US by volume of tweets. The wheel on the left shows tweets with negative sentiment, while the one on the right shows tweets with positive sentiment."
 
     svgp.append("text")
       .text(legtext1)
@@ -649,33 +649,57 @@
       var button = d3.select(".mastersvg")
             .append("rect")
             .attr({
-              x: 160, y: 260, width: 130, height: 40, opacity: 0.5
+              x: 145, y: 260, width: 63, height: 40, opacity: 0.7
             })
             .attr("fill", function(){
               if (tog == 0) { return "black"; } else { return "white"; }
             });
 
-      var buttontext = d3.select(".mastersvg")
-            .append("text")
-            .text(function(){
-              if (tog == 0) { return "volume"; } else { return "sentiment"; }
-            })
+
+      var button2 = d3.select(".mastersvg")
+            .append("rect")
             .attr({
-              x: 225,
-              y: 285,
-              opacity: 0.8
+              x: 209, y: 260, width: 80, height: 40, opacity: 0.7
             })
-            .attr("text-anchor", "middle")
-            .attr("font-weight", "bold")
-            .attr("font-size", 16)
             .attr("fill", function(){
               if (tog == 0) { return "white"; } else { return "black"; }
             });
 
+
+      var buttontext = d3.select(".mastersvg")
+            .append("text")
+            .text("volume")
+            .attr({
+              x: 150,
+              y: 285,
+              opacity: 0.8
+            })
+            .attr("text-anchor", "start")
+            .attr("font-weight", "bold")
+            .attr("font-size", 15)
+            .attr("fill", function(){
+              if (tog == 0) { return "white"; } else { return "white"; }
+            });
+
+      var buttontext2 = d3.select(".mastersvg")
+        .append("text")
+        .text("sentiment")
+        .attr({
+          x: 213,
+          y: 285,
+          opacity: 0.8
+        })
+        .attr("text-anchor", "start")
+        .attr("font-weight", "bold")
+        .attr("font-size", 15)
+        .attr("fill", function(){
+          if (tog == 0) { return "white"; } else { return "white"; }
+        });
+
       var buttoncover = d3.select(".mastersvg")
             .append("rect")
             .attr({
-              x: 160, y: 260, width: 130, height: 40, opacity: 0
+              x: 145, y: 260, width: 145, height: 40, opacity: 0
             })
             .on("click", toggle);
 
