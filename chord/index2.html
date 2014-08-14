@@ -677,9 +677,7 @@
             .attr("text-anchor", "start")
             .attr("font-weight", "bold")
             .attr("font-size", 15)
-            .attr("fill", function(){
-              if (tog == 0) { return "white"; } else { return "white"; }
-            });
+            .attr("fill", "white");
 
       var buttontext2 = d3.select(".mastersvg")
         .append("text")
@@ -692,16 +690,30 @@
         .attr("text-anchor", "start")
         .attr("font-weight", "bold")
         .attr("font-size", 15)
-        .attr("fill", function(){
-          if (tog == 0) { return "white"; } else { return "white"; }
-        });
+        .attr("fill", "white");
 
       var buttoncover = d3.select(".mastersvg")
             .append("rect")
             .attr({
               x: 145, y: 260, width: 145, height: 40, opacity: 0
             })
-            .on("click", toggle);
+            .on("click", toggle)
+            .on("mouseover", function(){
+              if (tog == 0){
+                buttontext2.attr("fill","black");
+              }
+              else {
+                buttontext.attr("fill", "black");
+              }
+            })
+            .on("mouseout", function(){
+              if (tog == 0){
+                buttontext2.attr("fill","white");
+              }
+              else {
+                buttontext.attr("fill", "white");
+              }
+            });
 
 
       // main charts
