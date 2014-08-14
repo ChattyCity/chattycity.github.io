@@ -184,6 +184,10 @@ font-size: 180%;
     padding-left: 0px;
 }
 
+#calendar {
+font-size: 10px;
+}
+
 /*
 .tooltip{
 	display: inline;
