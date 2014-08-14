@@ -32,7 +32,7 @@
   .underlay{
     font: 72px sans-serif;
     font-weight: bold;
-    fill-opacity: .20;
+    fill-opacity: .40;
   }
 
   .circle circle {
@@ -150,7 +150,8 @@
       .attr({
         x: ((width / 2) + boxw),
         y: 55,
-        class: "underlay"
+        class: "underlay",
+        fill: "red"
       })
       .attr("text-anchor", "middle");
 
@@ -159,7 +160,8 @@
       .attr({
         x: ((width * 3) / 2 + boxw),
         y: 55,
-        class: "underlay"
+        class: "underlay",
+        fill: "green"
       })
       .attr("text-anchor", "middle");
 
@@ -167,12 +169,12 @@
     svg = svgp_main
       .append("g")
         .attr("class", "circle")
-        .attr("transform", "translate(" + ((width / 2)+boxw) + "," + ((height / 2) + 0) + ")");
+        .attr("transform", "translate(" + ((width / 2)+boxw) + "," + ((height / 2) + 36) + ")");
 
     svg2 = svgp_main
       .append("g")
       .attr("class", "circle")
-      .attr("transform", "translate(" + ((width * 3) / 2 + boxw) + "," + ((height / 2) + 0) + ")");
+      .attr("transform", "translate(" + ((width * 3) / 2 + boxw) + "," + ((height / 2) + 36) + ")");
 
     svg.append("circle")
       .attr("r", outerRadius);
