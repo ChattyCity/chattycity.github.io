@@ -10,6 +10,7 @@ var Manager;
       id: 'result',
       target: '#docs'
     }));
+    
     Manager.addWidget(new AjaxSolr.PagerWidget({
       id: 'pager',
       target: '#pager',
@@ -37,14 +38,33 @@ var Manager;
       target: '#search',
       fields: [ 'tweet', 'hashtags', 'src_city', 'dest_city' ]
     }));
+    Manager.addWidget(new AjaxSolr.CalendarWidget({
+      id: 'calendar',
+      target: '#calendar',
+      field: 'tstamp'
+    }));
+    Manager.addWidget(new AjaxSolr.SentimentGroupWidget({
+  id: 'sentiment',
+  target: '#sentiment',
+  field: 'sentiment',
+  fields: ['sentiment']
+}));
     Manager.init();
     Manager.store.addByValue('q', '*:*');
     var params = {
       facet: true,
-      'facet.field': [ 'tweet', 'hashtags', 'src_city', 'dest_city' ],
+      'facet.field': [ 'tweet', 'hashtags', 'src_city', 'dest_city', 'sentiment' ],
       'facet.limit': 35,
       'facet.mincount': 5,
       'f.topics.facet.limit': 50,
+      'f.sentiment.facet.limit': 10,
+	  'f.sentiment.facet.range.start': -1,
+	  'f.sentiment.facet.range.end': 1,
+	  'f.sentiment.facet.range.gap': 0.1,
+      'facet.date': 'tstamp',
+      'facet.date.start': '2014-07-06T00:00:00.000Z/DAY',
+      'facet.date.end': '2014-07-31T00:00:00.000Z/DAY',
+      'facet.date.gap': '+1DAY',
       'json.nl': 'map'
     };
     for (var name in params) {
