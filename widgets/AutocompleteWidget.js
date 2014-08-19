@@ -36,14 +36,14 @@ AjaxSolr.AutocompleteWidget = AjaxSolr.AbstractTextWidget.extend({
       $(self.target).find('input').bind('keydown', function(e) {
         if (self.requestSent === false && e.which == 13) {
           var value = $(this).val();
-          if (value && self.set(value)) {
+          if (value && self.set('tweet:'+value)) {
             self.doRequest();
           }
         }
       });
     } // end callback
 
-    var params = [ 'rows=0&facet=true&facet.limit=-1&facet.mincount=10&json.nl=map' ];
+    var params = [ 'rows=0&facet=true&facet.limit=-1&facet.mincount=25&json.nl=map' ];
     for (var i = 0; i < this.fields.length; i++) {
       params.push('facet.field=' + this.fields[i]);
     }
