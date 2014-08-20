@@ -35,8 +35,8 @@ AjaxSolr.AutocompleteWidget = AjaxSolr.AbstractTextWidget.extend({
       // This has lower priority so that requestSent is set.
       $(self.target).find('input').bind('keydown', function(e) {
         if (self.requestSent === false && e.which == 13) {
-          var value = $(this).val();
-          if (value && self.set('tweet:'+value)) {
+          var value = $(this).val().split(' ').join('&');
+          if ('tweet:' + value && self.set('tweet:' + value)) {
             self.doRequest();
           }
         }
