@@ -158,9 +158,9 @@ The stopwords list was used to decreased the size of index footprint (and increa
 
 ##Web Design
 
-We used a one-page Bootstrap template ([Agency](http://startbootstrap.com/template-overviews/agency/) by [Start Bootstrap](http://startbootstrap.com/) for our webpage design. The main font was changed to a san-serif for a more clean and modern look and we broke the content into five main sections:
-1. About - A brief overview of our project concept, data source, and tools we used.
-2. Learn - A guided tour of interesting findings via a Tableau Story visualization.
-3. Explore - The final interactive chord diagram visualization.
-4. Search - An interface for searching the tweets using Solr.
-5. Team - Information about us.
+We used a one-page Bootstrap template ([Agency](http://startbootstrap.com/template-overviews/agency/) by [Start Bootstrap](http://startbootstrap.com/)) for our webpage design. The main font was changed to a san-serif for a more clean and modern look and we broke the content into five main sections:
+   1. About - A brief overview of our project concept, data source, and tools we used.
+   2. Learn - A guided tour of interesting findings via a Tableau Story visualization.
+   3. Explore - The final interactive chord diagram visualization.
+   4. Search - An interface for searching the tweets using Solr.
+   5. Team - Information about us.
