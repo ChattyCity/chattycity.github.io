@@ -33,7 +33,7 @@ For each city, we recorded states, and added quadrant information based on an ar
 
 ![](img/3.png)
 
-After compiling the list of 100 cities, we then used Python’s Tweepy library to gather tweets that contained any of the 100 cities in the body of the tweet. In this phase we recorded full json objects, and decided that we would extract what we needed from the object after we were done with collecting the data. We ran the script on an Amazon Web Services (AWS) EC2 instance. During the period of data collection there were a number of interruptions which resulted in short gaps in our data collection. We ran the script for a total for 3 weeks, and during that time gather close 15 million tweets, totalling about 15GB of data.
+After compiling the list of 100 cities, we then used Python’s Tweepy library to gather tweets that contained any of the 100 cities in the body of the tweet. In this phase we recorded full json objects, and decided that we would extract what we needed from the object after we were done with collecting the data. We ran the script on an Amazon Web Services (AWS) EC2 instance. During the period of data collection there were a number of interruptions which resulted in short gaps in our data collection. We ran the script for a total for 3 weeks, and during that time gathered nearly 15 million tweets, totalling about 15GB of data.
 
 Here is a visualization of our tweet collection over the 3 week timespan (note that we didn't collect any tweets on July 9, 10, or 24):
 
