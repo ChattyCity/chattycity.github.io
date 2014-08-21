@@ -9,7 +9,7 @@ Our goal with this project was to look at tweet sentiment based on tweeter's loc
 
 sentiment is defined as….
 
-##Tools:
+##Tools
 We utilized a number of different tools for this project. For gathering, cleansing, and transforming the data, we mostly used Python and a number of different Python libraries. We chose python because we were all at least partially familiar with it and found it easy to work with.
 For visualization, we used both Tableau and [d3.js](http://d3js.org). We chose Tableau for the story-telling section because it gave us a lot of flexibility to experiment with the data quickly and look for interesting patterns (although later we came across some limitation, which are further explained in the Tableau section below). For the Explore section of the project, we chose to use d3.js because we needed a tool that gave us more control over the visualization. 
 For building the search system, we used [Apache Solr](http://lucene.apache.org/solr/) and [AJAX Solr](https://github.com/evolvingweb/ajax-solr). We used Solr as an IR solution instead of other search engines (elasticsearch, endeca, etc.) because we wanted an open source solution with a lot of documentation that is used in production.
@@ -82,9 +82,13 @@ For Solr, we had to reformat the timestamp field in order for Java to recognize 
 
 ##Learn
 
+The idea for this section was to show the reader what we’ve learned from our exploration of the data. We used Tableau and it’s “Story Points” feature to take the reader through a guided tour of interesting findings.
+
 ###Process:
 
 ###Limitations:
+
+Tableau doesn't allow users to freely publish dashboards made from datasets with over 1 million rows (ours had nearly 15 million). In order to be able to publish a story board on our website for users to interact with, we created an extract (subset) of the data that was less than 1 million rows. We chose to use the ~532,000 tweets that had geocoordinates associated with the tweet (for any location, not just limited to the 100 cities on our list).
 
 ###Evaluation of Results:
 
