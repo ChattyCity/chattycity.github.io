@@ -3,9 +3,15 @@ ChattyCity
 
 ##Project description and goals
 
-Our goal with this project was to look at tweet sentiment (a general feeling or emotion, usually broken down as positive, negative, or neutral) based on tweeter's location (source) and where they are tweeting about (destination). We hypothesize that there is a bias for or against certain cities based on where the tweeter is from. For example, most residents in Juneau, AK might have a positive sentiment about San Francisco, CA, but residents of Seattle, WA might generally have a negative sentiment toward SF. We could also look at whether sentiment changes based on a number of different variables such as day of week, time of the day, weather, or major events like sports. 
+ChattyCity was designed and developed as a project to store, retrieve, visualize, and communicate data. Our project concept was to look at tweet sentiment (a general feeling or emotion, usually broken down as positive, negative, or neutral) based on tweeter's location (source) and where they are tweeting about (destination). We hypothesized that there is a bias for or against certain cities based on where the tweeter is from. For example, most residents in Seattle, WA might have a positive sentiment about San Francisco, CA, but residents of Los Angeles, CA might generally have a negative sentiment toward SF. 
+
+We can determine what city a tweet is from if the tweet has geocoordinates associated with it. Or, if a user has defined their location, we can assume that the majority of their tweets will originate from that location. In the example shown below, the user says she is from Berkeley and her tweet shows positive sentiment for the city of Oakland.
 
 ![](img/1.png)
+
+We wanted to be able to answer questions from our data such as “which cities have positive sentiment toward San Francisco?” and “Does time of day and/or day of week influence sentiment?” We also wanted to look at whether sentiment is influenced by a number of different variables such as weather or major events like sports, but unfortunately ran out of time. Another goal was to create an interface to allow a user to search our collection of tweets.
+
+
 
 ##Tools
 We utilized a number of different tools for this project. For gathering, cleansing, and transforming the data, we mostly used Python and a number of different Python libraries. We chose python because we were all at least partially familiar with it and found it easy to work with.
