@@ -3,7 +3,7 @@ ChattyCity
 
 ##Project description and goals
 
-ChattyCity was designed and developed as a project to store, retrieve, visualize, and communicate data. Our project concept was to look at tweet sentiment (a general feeling or emotion, usually broken down as positive, negative, or neutral) based on tweeter's location (source) and where they are tweeting about (destination). We hypothesized that there is a bias for or against certain cities based on where the tweeter is from. For example, most residents in Seattle, WA might have a positive sentiment about San Francisco, CA, but residents of Los Angeles, CA might generally have a negative sentiment toward SF. 
+ChattyCity was designed and developed as a project to store, retrieve, visualize, and communicate data. Our project concept was to look at tweet sentiment (a general feeling or emotion, usually broken down as positive, negative, or neutral) based on tweeter's location (source) and where they are tweeting about (destination). We hypothesized that there is a bias for or against certain cities based on where the tweeter is from. For example, most residents in Seattle might have a positive sentiment about San Francisco, but residents of Los Angeles might generally have a negative sentiment toward San Francisco. 
 
 We can determine what city a tweet is from if the tweet has geocoordinates associated with it. Or, if a user has defined their location, we can assume that the majority of their tweets will originate from that location. In the example shown below, the user says she is from Berkeley and her tweet shows positive sentiment for the city of Oakland.
 
