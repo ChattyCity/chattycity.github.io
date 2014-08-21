@@ -3,7 +3,7 @@ ChattyCity
 
 ##Project description and goals: 
 
-Our goal with this project was to look at tweet sentiment based on tweeter's location (source) and where they are tweeting about (destination). We hypothesize that there is a bias for or against certain cities based on where the tweeter is from. For example, most residents in Juneau, AL might have a positive sentiment about San Francisco, CA, but residents of Seattle, WA might generally have a negative sentiment toward SF. We could also look at whether sentiment changes based on a number of different variables such as day of week, time of the day, weather, or major events like sports. 
+Our goal with this project was to look at tweet sentiment based on tweeter's location (source) and where they are tweeting about (destination). We hypothesize that there is a bias for or against certain cities based on where the tweeter is from. For example, most residents in Juneau, AK might have a positive sentiment about San Francisco, CA, but residents of Seattle, WA might generally have a negative sentiment toward SF. We could also look at whether sentiment changes based on a number of different variables such as day of week, time of the day, weather, or major events like sports. 
 
 ![](img/1.png)
 
