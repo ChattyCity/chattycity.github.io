@@ -22,6 +22,7 @@ The visual below is an overview of our data pipeline for this project.
 We decided to look at the 100 major US cities and see what they said about each other. The list of 100 cities include 50 state capitals and the 50 most populous US cities not state capitals. The list was curated manually using wikipedia.
 
 State capitals: http://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States
+
 Most populous cities: http://en.wikipedia.org/wiki/List_of_United_States_cities_by_population
 
 You can find the full list of cities in the cities_quad.txt file in the chord folder.
