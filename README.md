@@ -97,7 +97,19 @@ While it is visually pleasing to hover over the different cities and watch the d
 ##Search
 The purpose of the search section is to provide validation for our curated analyses and an enviornemnt for data discovery. AJAX-Solr was used as a temple for the underlying MVC framework as well as the jumping off point for the search’s UI layout.
 
-The faceted search on the sidebar uses a wordcloud visualization to indicate the most frequent term by size that are adjusted as constraints are made to the query. We utilized  [Autolinker.js](https://github.com/gregjacobs/Autolinker.js) to make twitter handle and links clickable, which added a dimension of interactivity to the search section. Hovering over each tweet also provides “just in time” information with details of the tweet’s originating city (if available), the target city, and the tweet’s calculated sentiment. The autocomplete function kicks in when a user begins to enter a query term using the terms from the solr index. We ultimately limited the suggestions to having at least 10 references in tweets to reduce the overwhelming number of options, but to also improve the experience by having the search render faster.
+####Faceted Search
+The faceted search on the sidebar uses a wordcloud visualization to indicate the most frequent term by size that are adjusted as constraints are made to the query. 
+![Faceted Search](img/sidepanel.png)
+
+####Tweet and Tooltip
+We utilized  [Autolinker.js](https://github.com/gregjacobs/Autolinker.js) to make twitter handle and links clickable, which added a dimension of interactivity to the search section. Hovering over each tweet also provides “just in time” information with details of the tweet’s originating city (if available), the target city, and the tweet’s calculated sentiment. 
+![Tooltip 1](img/tooltip1.png)
+![Tooltip 2](img/tooltip2.png)
+
+####Autocomplete
+The autocomplete function kicks in when a user begins to enter a query term using the terms from the solr index. We ultimately limited the suggestions to having at least 10 references in tweets to reduce the overwhelming number of options, but to also improve the experience by having the search render faster. The number of avaialble tweets with the search term are indicated in parentheses.
+![Autocomplete](img/autocomplete.png)
+
 
 ###Load
 Loading data to Solr for indexing was accomplished using a simple shell script that partitioned the data into smaller chunks and looped through the files posting it to solr via curl.
