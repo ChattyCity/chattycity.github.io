@@ -11,9 +11,9 @@ sentiment is defined as….
 
 ##Tools:
 We utilized a number of different tools for this project. For gathering, cleansing, and transforming the data, we mostly used Python and a number of different Python libraries. We chose python because we were all at least partially familiar with it and found it easy to work with.
-For visualization, we used both Tableau and [d3.js][http://d3js.org]. We chose Tableau for the story-telling section because it gave us a lot of flexibility to experiment with the data quickly and look for interesting patterns (although later we came across some limitation, which are further explained in the Tableau section below). For the Explore section of the project, we chose to use d3.js because we needed a tool that gave us more control over the visualization. 
-For building the search system, we used [Apache Solr][http://lucene.apache.org/solr/] and [AJAX Solr][https://github.com/evolvingweb/ajax-solr]. We used Solr as an IR solution instead of other search engines (elasticsearch, endeca, etc.) because we wanted an open source solution with a lot of documentation that is used in production.
-And finally for the design of the website, we used [bootstrap.js][http://getbootstrap.com/].
+For visualization, we used both Tableau and [d3.js](http://d3js.org). We chose Tableau for the story-telling section because it gave us a lot of flexibility to experiment with the data quickly and look for interesting patterns (although later we came across some limitation, which are further explained in the Tableau section below). For the Explore section of the project, we chose to use d3.js because we needed a tool that gave us more control over the visualization. 
+For building the search system, we used [Apache Solr](http://lucene.apache.org/solr/) and [AJAX Solr](https://github.com/evolvingweb/ajax-solr). We used Solr as an IR solution instead of other search engines (elasticsearch, endeca, etc.) because we wanted an open source solution with a lot of documentation that is used in production.
+And finally for the design of the website, we used [bootstrap.js](http://getbootstrap.com/).
 
 ##Data Pipeline:
 The visual below is an overview of our data pipeline for this project.
@@ -36,7 +36,7 @@ You can find the code we used for the data extraction --here--.
 
 ##Parsing and Cleansing:
 
-After gathering all the data, we used Python for parsing the json objects to extracts our fields of interest. From each tweet object, we extracted a timestamp (UTC time zone), the location of the tweeter (if available), the geotagged location of the tweet (if available), and text of the tweet itself. In order to determine source city, we gave priority to the geotagged location, and then the location of the tweeter. If neither were available, we assigned a value of “none” to the source city. We then scanned each tweet to extract the destination city (what city the tweet was about), hashtags, and computed a sentiment score on the tweet using the [https://textblob.readthedocs.org/en/dev/]TextBlob library. We finally stitched all the individuals files that were parsed together into a single tab separated text file, and added a unique ID field. The final schema for the clean data is below:
+After gathering all the data, we used Python for parsing the json objects to extracts our fields of interest. From each tweet object, we extracted a timestamp (UTC time zone), the location of the tweeter (if available), the geotagged location of the tweet (if available), and text of the tweet itself. In order to determine source city, we gave priority to the geotagged location, and then the location of the tweeter. If neither were available, we assigned a value of “none” to the source city. We then scanned each tweet to extract the destination city (what city the tweet was about), hashtags, and computed a sentiment score on the tweet using the [TrextBlob](https://textblob.readthedocs.org/en/dev/) library. We finally stitched all the individuals files that were parsed together into a single tab separated text file, and added a unique ID field. The final schema for the clean data is below:
 
 uid \t hashtags \t tstamp \t src_city_place \t src_city_user \t src_city \t dest_city \t tweet \t sentiment
 
@@ -61,7 +61,7 @@ For Solr, we had to reformat the timestamp field in order for Java to recognize 
 ##Explore:
 Initially we were contempating wether to use a map-based visualization for the Explore section of the project or use [http://bl.ocks.org/mbostock/4062006]chord diagrams. We chose chord diagrams because we felt it would be hard to clearly show volume and directionality of connections between cities using a map. 
 
-We decided to use two diagrams side-by-side because we were interested in showing directionality as well as sentiment. Using two diagrams, we could then use color to show directionality (color of paths connecting different cities) and sentiment using position (diagram on the left showing negative tweets, and the one on the right showing positive tweets.) In order to be able to see all tweets associated with each city, however, it was important that the diagrams be linked. This is accomplished through the [brushing and linking][http://en.wikipedia.org/wiki/Brushing_and_linking] technique. When a user hover over a city on one diagram, the same city is highlighted in the second diagram as well.
+We decided to use two diagrams side-by-side because we were interested in showing directionality as well as sentiment. Using two diagrams, we could then use color to show directionality (color of paths connecting different cities) and sentiment using position (diagram on the left showing negative tweets, and the one on the right showing positive tweets.) In order to be able to see all tweets associated with each city, however, it was important that the diagrams be linked. This is accomplished through the [brushing and linking](http://en.wikipedia.org/wiki/Brushing_and_linking) technique. When a user hover over a city on one diagram, the same city is highlighted in the second diagram as well.
 
 ###Legibility:
 
