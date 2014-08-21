@@ -50,7 +50,7 @@ After gathering all the data, we used Python for parsing the json objects to ext
 
 uid \t hashtags \t tstamp \t src_city_place \t src_city_user \t src_city \t dest_city \t tweet \t sentiment
 
-you can find the source code for the all the transformations in the datacleaner folder.
+You can find the source code for the all the transformations in the datacleaner folder.
 
 ###Transformation for Tableau:
 
