@@ -55,11 +55,16 @@ We needed to write another python script to perform a number of transformations 
 For Solr, we had to reformat the timestamp field in order for Java to recognize that field as a time field. We also had to change the encoding of the tweets to UTF-8 and eliminate all leading and trailing quotations from the tweets.
 
 ##Learn:
+
 ###Process:
+
 ###Limitations:
+
 ###Evaluation of Results:
+
 ##Explore:
-Initially we were contempating wether to use a map-based visualization for the Explore section of the project or use [http://bl.ocks.org/mbostock/4062006]chord diagrams. We chose chord diagrams because we felt it would be hard to clearly show volume and directionality of connections between cities using a map. 
+
+Initially we were contempating wether to use a map-based visualization for the Explore section of the project or use [chord diagrams](http://bl.ocks.org/mbostock/4062006). We chose chord diagrams because we felt it would be hard to clearly show volume and directionality of connections between cities using a map. 
 
 We decided to use two diagrams side-by-side because we were interested in showing directionality as well as sentiment. Using two diagrams, we could then use color to show directionality (color of paths connecting different cities) and sentiment using position (diagram on the left showing negative tweets, and the one on the right showing positive tweets.) In order to be able to see all tweets associated with each city, however, it was important that the diagrams be linked. This is accomplished through the [brushing and linking](http://en.wikipedia.org/wiki/Brushing_and_linking) technique. When a user hover over a city on one diagram, the same city is highlighted in the second diagram as well.
 
