@@ -1,7 +1,5 @@
 ChattyCity
 =========
-Write here collaboratively, add later to github when done.
-#ChattyCity
 
 ##Project description and goals: 
 
@@ -13,17 +11,18 @@ sentiment is defined as….
 
 ##Tools:
 We utilized a number of different tools for this project. For gathering, cleansing, and transforming the data, we mostly used Python and a number of different Python libraries. We chose python because we were all at least partially familiar with it and found it easy to work with.
-For visualization, we used both Tableau and [http://d3js.org]d3.js. We chose Tableau for the story-telling section because it gave us a lot of flexibility to experiment with the data quickly and look for interesting patterns (although later we came across some limitation, which are further explained in the Tableau section below). For the Explore section of the project, we chose to use d3.js because we needed a tool that gave us more control over the visualization. 
-For building the search system, we used [http://lucene.apache.org/solr/]Apache Solr and AJAX Solr. We used Solr as an IR solution instead of other search engines (elasticsearch, endeca, etc.) because we wanted an open source solution with a lot of documentation that is used in production.
-And finally for the design of the website, we used [http://getbootstrap.com/]bootstrap.js.
+For visualization, we used both Tableau and [d3.js][http://d3js.org]. We chose Tableau for the story-telling section because it gave us a lot of flexibility to experiment with the data quickly and look for interesting patterns (although later we came across some limitation, which are further explained in the Tableau section below). For the Explore section of the project, we chose to use d3.js because we needed a tool that gave us more control over the visualization. 
+For building the search system, we used [Apache Solr][http://lucene.apache.org/solr/] and [AJAX Solr][https://github.com/evolvingweb/ajax-solr]. We used Solr as an IR solution instead of other search engines (elasticsearch, endeca, etc.) because we wanted an open source solution with a lot of documentation that is used in production.
+And finally for the design of the website, we used [bootstrap.js][http://getbootstrap.com/].
+
 ##Data Pipeline:
 The visual below is an overview of our data pipeline for this project.
 
 ##Gathering Data:
 We decided to look at the 100 major US cities and see what they said about each other. The list of 100 cities include 50 state capitals and the 50 most populous US cities not state capitals. The list was curated manually using wikipedia.
 
-State capitals: [http://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States]http://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States
-Most populous cities: [http://en.wikipedia.org/wiki/List_of_United_States_cities_by_population]http://en.wikipedia.org/wiki/List_of_United_States_cities_by_population
+State capitals: http://en.wikipedia.org/wiki/List_of_capitals_in_the_United_States
+Most populous cities: http://en.wikipedia.org/wiki/List_of_United_States_cities_by_population
 
 You can find the full list of cities in the cities_quad.txt file in the chord folder.
 
@@ -61,13 +60,15 @@ For Solr, we had to reformat the timestamp field in order for Java to recognize 
 ##Explore:
 Initially we were contempating wether to use a map-based visualization for the Explore section of the project or use [http://bl.ocks.org/mbostock/4062006]chord diagrams. We chose chord diagrams because we felt it would be hard to clearly show volume and directionality of connections between cities using a map. 
 
-We decided to use two diagrams side-by-side because we were interested in showing directionality as well as sentiment. Using two diagrams, we could then use color to show directionality (color of paths connecting different cities) and sentiment using position (diagram on the left showing negative tweets, and the one on the right showing positive tweets.) In order to be able to see all tweets associated with each city, however, it was important that the diagrams be linked. This is accomplished through the [http://en.wikipedia.org/wiki/Brushing_and_linking]brushing and linking technique. When a user hover over a city on one diagram, the same city is highlighted in the second diagram as well.
+We decided to use two diagrams side-by-side because we were interested in showing directionality as well as sentiment. Using two diagrams, we could then use color to show directionality (color of paths connecting different cities) and sentiment using position (diagram on the left showing negative tweets, and the one on the right showing positive tweets.) In order to be able to see all tweets associated with each city, however, it was important that the diagrams be linked. This is accomplished through the [brushing and linking][http://en.wikipedia.org/wiki/Brushing_and_linking] technique. When a user hover over a city on one diagram, the same city is highlighted in the second diagram as well.
 
-Legibility:
+###Legibility:
+
 We chose to include only the top 40 of the 100 cities in the Explore section mainly in favor of legibility. Because we have two diagrams side-by-side, we were limited in terms of the real estate we could work with on the screen, and so chose to show only 40 cities in order to avoid a lot of overlap between cities with smaller volumes of tweets. Even with 40 cities, we still had to manually eliminate label for Sacramento, CA and Lincoln, NB on the Negative diagram, and Lincoln, NB in the Positive diagram. We also implemented a proximity detection capability to the chord diagrams, which means when the mouse hovers close to a city in either of the chord diagrams, that city is highlighted.
 Finally, in order to make it easier to hover over paths that might be too narrow to view normally, we added a zoom feature. Using the mouse wheel, the user can zoom into any section of the diagram and have a close look at the paths.
 
-Summary Information:
+###Summary Information:
+
 While it is visually pleasing to hover over the different cities and watch the diagrams change, we found it would be difficult glean insights such as ranking the top cities talking about a destination. In order to make this easier and also show a distribution of the overall tweets included in the visualization we implemented an information bar on the side below the legend where we show the top 5 cities (by volume) tweeting a certain city, and the top 5 cities that city is tweeting about. Hover over the individual diagrams we also reveal information about the volume of and the average sentiment of tweets moving between the cities.
 
 ###Process:
@@ -78,9 +79,6 @@ While it is visually pleasing to hover over the different cities and watch the d
 The purpose of the search section is to provide validation for our curated analyses and discovery platform. AJAX-Solr was used as a temple for the underlying MVC framework as well as the jumping off point for the search’s UI layout.
 
 The faceted search on the sidebar uses a wordcloud visualization to indicate the most frequent term by size that are adjusted as constraints are made to the query. We utilized  Autolinker.js to make twitter handle and links clickable, which added a dimension of interactivity to the search section. Hovering over each tweet also provides “just in time” information with details of the tweet’s originating city (if available), the target city, and the tweet’s calculated sentiment. The autocomplete function kicks in when a user begins to enter a query term using the terms from the solr index. We ultimately limited the suggestions to having at least 10 references in tweets to reduce the overwhelming number of options, but to also improve the experience by having the search render faster.
-
-
-
 
 ###Load
 Loading data to Solr for indexing was accomplished using a simple shell script that partitioned the data into smaller chunks and looped through the files posting it to solr via curl.
@@ -95,11 +93,17 @@ done
 <br>
 
 In hindsight, we could have leveraged Solr’s DataImportHandler to ease addition of newly collected tweets and reindexing.
+
 ###Configuration
+
 Solr provides a great deal of abstraction and out of the box support for search; however, customizations were made to enhance user experience.
+
 ####solrconfig.xml - settings on mem usage, # of simultaneous warm ups, etc.
+
 We reduced the number of warm up queries to one in order to reduce RAM usage and increase startup stability.
+
 ####schema.xml - data definition
+
 The solr data source is comprised of 7 fields that are indexed individually and one copy field that is a concatenation of tweet and city fields used for the search bar.
 | Field   |      Type      |  Indexed | Stored | Required | Multi Values |
 |----------|:----------------:|:-------------:|:--------:|:--------------:|:----------------:|
@@ -112,8 +116,11 @@ The solr data source is comprised of 7 fields that are indexed individually and 
 |Sentiment|double|true|true|true|false|
    
 ####synonyms.txt
+
 A synonym list was also used for a query time thesaurus that allows users to search for New York by typing NY.
+
 ####stopwords.txt - 
+
 The stopwords list was used to decreased the size of index footprint (and increase speed) by removing common English words from the index process (e.g., the).
 
 ####Evaluations:
