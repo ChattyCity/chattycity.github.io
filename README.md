@@ -53,26 +53,24 @@ you can find the source code for the all the transformations in the datacleaner 
 
 To visualize sentiment vs. time of day/day of week for individual cities, it was necessary to convert the default UTC time to local time. In order to do this, we used [Batch Geocode](http://www.findlatitudeandlongitude.com/batch-geocode/#.U_YX2bxdVy8) to input a text file of the 100 cities and their states to get their latitude and longitude, manually added the timezone, and then used the python datetime and dateutil packages to convert from UTC to local time. Thinking it would be useful to normalize some of our data by city population (New York, NY is likely to have more tweets simply due to the fact that it has the largest population of potential tweeters), we also manually added the populations for each of the 100 cities on our list using the information listed in the wikipedia articles referenced above. Also, we filtered for the 100 cities, so the destination city column only has these cities on it, however, our source city (place) and source city (user) columns could have any location. It also might be interesting to look at cases for which the source city (place) and source city (user) differ, but we might want to limit it to only the cities on our list of 100, so these were additional columns created. The final (3.63GB!) text file imported into Tableau had the following columns:
 
- time_utc - Time of tweet in UTC
- time_local - Time of tweet in local time (only for tweets with geocoordinates associated)
- geo_city - Location of tweet (only for tweets with geocoordinates associated)
- geo_city_onlist - Location of tweet with geocoords (only if on our list of 100 cities)
- geo_city_onlist_lat - Latitude of tweet with geocoords (only if on our list of 100 cities)
- geo_city_onlist_lon - Longitude of tweet with geocoords (only if on our list of 100 cities)
- geo_city_onlist_pop - Population of geocoords (only if on our list of 100 cities)
- user_city - User-defined location
- user_city_onlist - User-defined location (only if on our list of 100 cities)
- user_city_onlist_lat - Latitude of user-defined location (only if on our list of 100 cities)
- user_city_onlist_lon - Longitude of user-defined location (only if on our list of 100 cities)
- user_city_onlist_pop - Population of user-defined location (only if on our list of 100 cities)
- dest_city - City on our list of 100 that was mentioned in the text of the tweet
- dest_city_lat - Latitude of destination city
- dest_city_lon - Longtitude of destination city
- dest_city_pop - Population of destination city
- tweet - Actual full text of tweet
- sentiment - Sentiment score (ranges from -1 to +1)
-
-In order the make the data ready for ingestion to Tableau, we converted the timestamps from UTC to a local timezone, added geolocations data, and population information for each of the 100 cities.
+* time_utc - Time of tweet in UTC
+* time_local - Time of tweet in local time (only for tweets with geocoordinates associated)
+* geo_city - Location of tweet (only for tweets with geocoordinates associated)
+* geo_city_onlist - Location of tweet with geocoords (only if on our list of 100 cities)
+* geo_city_onlist_lat - Latitude of tweet with geocoords (only if on our list of 100 cities)
+* geo_city_onlist_lon - Longitude of tweet with geocoords (only if on our list of 100 cities)
+* geo_city_onlist_pop - Population of geocoords (only if on our list of 100 cities)
+* user_city - User-defined location
+* user_city_onlist - User-defined location (only if on our list of 100 cities)
+* user_city_onlist_lat - Latitude of user-defined location (only if on our list of 100 cities)
+* user_city_onlist_lon - Longitude of user-defined location (only if on our list of 100 cities)
+* user_city_onlist_pop - Population of user-defined location (only if on our list of 100 cities)
+* dest_city - City on our list of 100 that was mentioned in the text of the tweet
+* dest_city_lat - Latitude of destination city
+* dest_city_lon - Longtitude of destination city
+* dest_city_pop - Population of destination city
+* tweet - Actual full text of tweet
+* sentiment - Sentiment score (ranges from -1 to +1)
 
 ###Transformations for d3.js:
 
