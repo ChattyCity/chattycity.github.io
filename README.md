@@ -5,7 +5,7 @@ ChattyCity
 
 Our goal with this project was to look at tweet sentiment based on tweeter's location (source) and where they are tweeting about (destination). We hypothesize that there is a bias for or against certain cities based on where the tweeter is from. For example, most residents in Juneau, AL might have a positive sentiment about San Francisco, CA, but residents of Seattle, WA might generally have a negative sentiment toward SF. We could also look at whether sentiment changes based on a number of different variables such as day of week, time of the day, weather, or major events like sports. 
 
-![](https://github.com/dmilad/dmilad.github.io/img/1.png)
+![](img/1.png)
 
 sentiment is defined as….
 
@@ -18,7 +18,7 @@ And finally for the design of the website, we used [bootstrap.js](http://getboot
 ##Data Pipeline:
 The visual below is an overview of our data pipeline for this project.
 
-![](https://github.com/dmilad/dmilad.github.io/img/2.png)
+![](img/2.png)
 
 ##Gathering Data:
 We decided to look at the 100 major US cities and see what they said about each other. The list of 100 cities include 50 state capitals and the 50 most populous US cities not state capitals. The list was curated manually using wikipedia.
@@ -31,7 +31,7 @@ You can find the full list of cities in the cities_quad.txt file in the chord fo
 
 For each city, we recorded states, and added quadrant information based on an arbitrary breakdown of the US map into 4 areas (NE, SE, SW, NW) as depicted in the map below. The quadrants were used in the Explore section of the project to distinguish the different cities depicted in the chord diagrams.
 
-![](https://github.com/dmilad/dmilad.github.io/img/3.png)
+![](img/3.png)
 
 After compiling the list of 100 cities, we then used Python’s Tweepy library to gather tweets that contained any of the 100 cities in the body of the tweet. In this phase we recorded full json objects, and decided that we would extract what we needed from the object after we were done with collecting the data. We ran the script on an Amazon Web Services (AWS) EC2 instance. During the period of data collection there were a number of interruptions which resulted in short gaps in our data collection. We ran the script for a total for 3 weeks, and during that time gather close 15 million tweets, totalling about 15GB of data. 
 
@@ -69,26 +69,26 @@ For Solr, we had to reformat the timestamp field in order for Java to recognize 
 
 Initially we were contempating wether to use a map-based visualization for the Explore section of the project or use [chord diagrams](http://bl.ocks.org/mbostock/4062006). We chose chord diagrams because we felt it would be hard to clearly show volume and directionality of connections between cities using a map. 
 
-![](https://github.com/dmilad/dmilad.github.io/img/4.png)
+![](img/4.png)
 
 We decided to use two diagrams side-by-side because we were interested in showing directionality as well as sentiment. Using two diagrams, we could then use color to show directionality (color of paths connecting different cities) and sentiment using position (diagram on the left showing negative tweets, and the one on the right showing positive tweets.) In order to be able to see all tweets associated with each city, however, it was important that the diagrams be linked. This is accomplished through the [brushing and linking](http://en.wikipedia.org/wiki/Brushing_and_linking) technique. When a user hover over a city on one diagram, the same city is highlighted in the second diagram as well.
 
-![](https://github.com/dmilad/dmilad.github.io/img/5.png)
+![](img/5.png)
 
 ###Legibility:
 
 We chose to include only the top 40 of the 100 cities in the Explore section mainly in favor of legibility. Because we have two diagrams side-by-side, we were limited in terms of the real estate we could work with on the screen, and so chose to show only 40 cities in order to avoid a lot of overlap between cities with smaller volumes of tweets. Even with 40 cities, we still had to manually eliminate label for Sacramento, CA and Lincoln, NB on the Negative diagram, and Lincoln, NB in the Positive diagram. We also implemented a proximity detection capability to the chord diagrams, which means when the mouse hovers close to a city in either of the chord diagrams, that city is highlighted.
 Finally, in order to make it easier to hover over paths that might be too narrow to view normally, we added a zoom feature. Using the mouse wheel, the user can zoom into any section of the diagram and have a close look at the paths.
 
-![](https://github.com/dmilad/dmilad.github.io/img/6.png)
+![](img/6.png)
 
 ###Summary Information:
 
 While it is visually pleasing to hover over the different cities and watch the diagrams change, we found it would be difficult glean insights such as ranking the top cities talking about a destination. In order to make this easier and also show a distribution of the overall tweets included in the visualization we implemented an information bar on the side below the legend where we show the top 5 cities (by volume) tweeting a certain city, and the top 5 cities that city is tweeting about. Hover over the individual diagrams we also reveal information about the volume of and the average sentiment of tweets moving between the cities.
 
-![](https://github.com/dmilad/dmilad.github.io/img/7.png)
+![](img/7.png)
 
-![](https://github.com/dmilad/dmilad.github.io/img/8.png)
+![](img/8.png)
 
 ###Process:
 ###Limitations:
