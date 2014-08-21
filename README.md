@@ -101,19 +101,17 @@ done
 In hindsight, we could have leveraged Solr’s DataImportHandler to ease addition of newly collected tweets and reindexing.
 
 ###Configuration
-
 Solr provides a great deal of abstraction and out of the box support for search; however, customizations were made to enhance user experience.
 
-####solrconfig.xml - settings on mem usage, # of simultaneous warm ups, etc.
-
+####solrconfig.xml
 We reduced the number of warm up queries to one in order to reduce RAM usage and increase startup stability.
 
-####schema.xml - data definition
-
+#####schema.xml
 The solr data source is comprised of 7 fields that are indexed individually and one copy field that is a concatenation of tweet and city fields used for the search bar.
+
 | Field   |      Type      |  Indexed | Stored | Required | Multi Values |
 |----------|:----------------:|:-------------:|:--------:|:--------------:|:----------------:|
-| UID |  string| true |true |true |true |false |
+| UID |  string| true |true |true |false |
 | Hashtags |    text_general  |  true |true | false | true|
 | Tstamp| datetime|  true |true |true | false |
 |Src_city|text_general|true|true|true|false|
@@ -121,12 +119,10 @@ The solr data source is comprised of 7 fields that are indexed individually and 
 |Tweet|text_general|true|true|true|false|
 |Sentiment|double|true|true|true|false|
    
-####synonyms.txt
-
+#####synonyms.txt
 A synonym list was also used for a query time thesaurus that allows users to search for New York by typing NY.
 
-####stopwords.txt - 
-
+#####stopwords.txt 
 The stopwords list was used to decreased the size of index footprint (and increase speed) by removing common English words from the index process (e.g., the).
 
 ####Evaluations:
