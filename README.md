@@ -87,13 +87,9 @@ For Solr, we had to reformat the timestamp field in order for Java to recognize 
 
 The idea for this section was to show the reader what we’ve learned from our exploration of the data. We used Tableau and it’s “Story Points” feature to take the reader through a guided tour of interesting findings.
 
-###Process:
-
 ###Limitations:
 
 Tableau doesn't allow users to freely publish dashboards made from datasets with over 1 million rows (ours had nearly 15 million). In order to be able to publish a story board on our website for users to interact with, we created an extract (subset) of the data that was less than 1 million rows. We chose to use the ~532,000 tweets that had geocoordinates associated with the tweet (for any location, not just limited to the 100 cities on our list).
-
-###Evaluation of Results:
 
 ##Explore
 
