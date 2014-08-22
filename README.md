@@ -116,11 +116,9 @@ While it is visually pleasing to hover over the different cities and watch the d
 
 ![](img/8.png)
 
-###Process:
-###Limitations:
-###Evaluation of Results:
 
 ##Search
+
 The purpose of the search section is to provide validation for our curated analyses and an enviornemnt for data discovery. AJAX-Solr was used as a temple for the underlying MVC framework as well as the jumping off point for the search’s UI layout.
 
 ####Faceted Search:
